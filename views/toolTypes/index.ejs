@@ -3,9 +3,11 @@
 
 <main>
   <h1> Tool Types</h1>
-  <a href="/toolTypes/new">
-    <button type="button">Add Tool Type</button>
-  </a>
+  <% if (user) { %>
+    <a href="/toolTypes/new">
+      <button type="button">Add Tool Type</button>
+    </a>
+  <% } %>
   <ul>
     <% toolTypes.forEach(toolType => { %>
       <li>
@@ -16,13 +18,6 @@
         </div>
         <div>
           <%= toolType.description %>
-        </div>
-        <div>
-          <% if (toolType.author.equals(user?.profile._id)) { %>
-            <a href="/toolTypes/<%= toolType.id %>/edit">
-              <button type="button">Edit</button>
-            </a>
-          <% } %>
         </div>
       </li>
     <% }) %>

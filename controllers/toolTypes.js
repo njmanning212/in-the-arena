@@ -51,8 +51,24 @@ function index (req, res) {
   })
 }
 
+function show (req, res) {
+  ToolType.findById(req.params.toolTypeId)
+  .populate('author')
+  .then (toolType => {
+    res.render('toolTypes/show', {
+      title: toolType.name,
+      toolType,
+    })
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect('/toolTypes')
+  })
+}
+
 export {
   newToolType as new,
   create,
   index,
+  show,
 }

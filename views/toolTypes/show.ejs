@@ -1,0 +1,21 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <h1> <%= toolType.name %></h1>
+  <div>
+    created by <%= toolType.author.name %>
+  </div>
+  <div>
+    <%= toolType.description %>
+  </div>
+  <div>
+    <% if (toolType.author.equals(user?.profile._id)) { %>
+      <a href="/toolTypes/<%= toolType.id %>/edit">
+        <button type="button">Edit/Delete</button>
+      </a>
+    <% } %>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

@@ -9,6 +9,7 @@ router.get('/new', isLoggedIn, toolTypesCtrl.new)
 router.get('/:toolTypeId', toolTypesCtrl.show)
 router.get('/:toolTypeId/edit', isLoggedIn, toolTypesCtrl.edit)
 router.post('/', isLoggedIn, toolTypesCtrl.create)
+router.put('/:toolTypeId', isLoggedIn, toolTypesCtrl.update)
 
 export {
   router

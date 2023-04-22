@@ -80,10 +80,31 @@ function edit (req, res) {
   })
 }
 
+function update (req, res) {
+  ToolType.findById(req.params.toolTypeId)
+  .then (toolType => {
+    if(toolType.author.equals(req.user.profile._id)) {
+      toolType.updateOne(req.body)
+      .then (() => {
+        res.redirect(`/toolTypes/${toolType._id}`)
+      })
+      .catch (err => {
+        console.log(err)
+        res.redirect(`/toolTypes/${toolType._id}/edit`)
+      })
+    }
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect('/toolTypes')
+  })
+}
+
 export {
   newToolType as new,
   create,
   index,
   show,
   edit,
+  update,
 }

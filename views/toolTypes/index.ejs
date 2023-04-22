@@ -1,0 +1,32 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <h1> Tool Types</h1>
+  <a href="/toolTypes/new">
+    <button type="button">Add Tool Type</button>
+  </a>
+  <ul>
+    <% toolTypes.forEach(toolType => { %>
+      <li>
+        <div>
+          <a href="/toolTypes/<%= toolType.id %>">
+            <%= toolType.name %>
+          </a>
+        </div>
+        <div>
+          <%= toolType.description %>
+        </div>
+        <div>
+          <% if (toolType.author.equals(user?.profile._id)) { %>
+            <a href="/toolTypes/<%= toolType.id %>/edit">
+              <button type="button">Edit</button>
+            </a>
+          <% } %>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+</main>
+
+<%- include('../partials/footer') %>

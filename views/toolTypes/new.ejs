@@ -9,7 +9,7 @@
         <label for="name">Name</label>
       </div>
       <div>
-        <input type="text" name="name" id="name" />
+        <input type="text" name="name" id="name" autocomplete="off"/>
       </div>
     </div>
     <div>
@@ -17,18 +17,13 @@
         <label for="description">Description</label>
       </div>
       <div>
-        <textarea type="text" name="description" id="description"></textarea>
+        <div>
+          <textarea type="text" name="description" id="description" maxlength="100"></textarea>
+        </div>
+        100 char max
       </div>
     </div>
     <button type="submit">Add Tool Type</button>
-  <% if (user?.profile.avatar) { %>
-    <div>
-      <img
-        src="<%= user.profile.avatar %>"
-        alt="<%= user.profile.name %> avatar"
-      />
-    </div>
-  <% } %>
 </main>
 
 <%- include('../partials/footer') %>

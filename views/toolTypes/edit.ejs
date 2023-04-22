@@ -29,6 +29,12 @@
   </form>
   <form action="/toolTypes/<%= toolType._id %>?_method=DELETE" method="POST">
     <button type="submit">Delete Tool Type</button>
+  </form>
+  <% if (blankError) { %>
+    <div>
+      <h2>Please don't leave any fields blank</h2>
+    </div>
+  <% } %>
 </main>
 
 <%- include('../partials/footer') %>

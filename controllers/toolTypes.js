@@ -4,37 +4,45 @@ import { Profile } from "../models/profile.js";
 function newToolType (req, res) {
   res.render('toolTypes/new', {
     title: 'Add Tool Type',
-    error: false,
+    blankError: false,
   })
 }
 
 function create (req, res) {
-  if (req.user.profile._id) {     
-    req.body.author = req.user.profile._id
-    ToolType.create(req.body)
-    .then (toolType => {
-      Profile.findById(req.user.profile._id)
-      .then (profile => {
-        profile.createdToolTypes.push(toolType._id)
-        profile.save()
-        .then (() => {
-          res.redirect('/toolTypes')
+  let checkArr = [req.body.name, req.body.description]
+  if (checkArr.includes('')) {
+    res.render('toolTypes/new', {
+      title: 'Add Tool Type',
+      blankError: true,
+    })
+  } else{
+    if (req.user.profile._id) {     
+      req.body.author = req.user.profile._id
+      ToolType.create(req.body)
+      .then (toolType => {
+        Profile.findById(req.user.profile._id)
+        .then (profile => {
+          profile.createdToolTypes.push(toolType._id)
+          profile.save()
+          .then (() => {
+            res.redirect('/toolTypes')
+          })
+          .catch(err => {
+            console.log(err)
+            res.redirect('/toolTypes/new')
+          })
         })
         .catch(err => {
           console.log(err)
           res.redirect('/toolTypes/new')
         })
       })
-      .catch(err => {
+      .catch (err => {
         console.log(err)
         res.redirect('/toolTypes/new')
       })
-    })
-    .catch (err => {
-      console.log(err)
-      res.redirect('/toolTypes/new')
-    })
-  } 
+    } 
+  }
 }
 
 function index (req, res) {
@@ -72,6 +80,7 @@ function edit (req, res) {
     res.render('toolTypes/edit', {
       title: `Edit ${toolType.name}`,
       toolType,
+      blankError: false,
     })
   })
   .catch (err => {
@@ -81,23 +90,30 @@ function edit (req, res) {
 }
 
 function update (req, res) {
-  ToolType.findById(req.params.toolTypeId)
-  .then (toolType => {
-    if(toolType.author.equals(req.user.profile._id)) {
-      toolType.updateOne(req.body)
-      .then (() => {
-        res.redirect(`/toolTypes/${toolType._id}`)
-      })
-      .catch (err => {
-        console.log(err)
-        res.redirect(`/toolTypes/${toolType._id}/edit`)
-      })
-    }
-  })
-  .catch (err => {
-    console.log(err)
-    res.redirect('/toolTypes')
-  })
+  let checkArr = [req.body.name, req.body.description]
+    ToolType.findById(req.params.toolTypeId)
+    .then (toolType => {
+      if (checkArr.includes('')) {
+        res.render('toolTypes/edit', {
+          title: `Edit ${toolType.name}`,
+          toolType,
+          blankError: true,
+        })
+      } else if(toolType.author.equals(req.user.profile._id)) {
+        toolType.updateOne(req.body)
+        .then (() => {
+          res.redirect(`/toolTypes/${toolType._id}`)
+        })
+        .catch (err => {
+          console.log(err)
+          res.redirect(`/toolTypes/${toolType._id}/edit`)
+        })
+      }
+    })
+    .catch (err => {
+      console.log(err)
+      res.redirect('/toolTypes')
+    })
 }
 
 function deleteToolType (req, res) {
@@ -114,7 +130,6 @@ function deleteToolType (req, res) {
       })
     }
   })
-
 }
 
 export {

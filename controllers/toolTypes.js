@@ -5,43 +5,57 @@ function newToolType (req, res) {
   res.render('toolTypes/new', {
     title: 'Add Tool Type',
     blankError: false,
+    duplicateError: false,
   })
 }
 
 function create (req, res) {
+  req.body.name = req.body.name.toUpperCase()
   let checkArr = [req.body.name, req.body.description]
   if (checkArr.includes('')) {
     res.render('toolTypes/new', {
       title: 'Add Tool Type',
       blankError: true,
+      duplicateError: false,
     })
-  } else{
-    if (req.user.profile._id) {     
-      req.body.author = req.user.profile._id
-      ToolType.create(req.body)
-      .then (toolType => {
-        Profile.findById(req.user.profile._id)
-        .then (profile => {
-          profile.createdToolTypes.push(toolType._id)
-          profile.save()
-          .then (() => {
-            res.redirect('/toolTypes')
+  } else {
+    ToolType.findOne({name: req.body.name})
+    .then (duplicateToolType => {
+      if (duplicateToolType) {
+        res.render('toolTypes/new', {
+          title: 'Add Tool Type',
+          blankError: false,
+          duplicateError: true,
+        })
+      } else {
+        if (req.user.profile._id) {     
+          req.body.author = req.user.profile._id
+          ToolType.create(req.body)
+          .then (toolType => {
+            Profile.findById(req.user.profile._id)
+            .then (profile => {
+              profile.createdToolTypes.push(toolType._id)
+              profile.save()
+              .then (() => {
+                res.redirect('/toolTypes')
+              })
+              .catch(err => {
+                console.log(err)
+                res.redirect('/toolTypes/new')
+              })
+            })
+            .catch(err => {
+              console.log(err)
+              res.redirect('/toolTypes/new')
+            })
           })
-          .catch(err => {
+          .catch (err => {
             console.log(err)
             res.redirect('/toolTypes/new')
           })
-        })
-        .catch(err => {
-          console.log(err)
-          res.redirect('/toolTypes/new')
-        })
-      })
-      .catch (err => {
-        console.log(err)
-        res.redirect('/toolTypes/new')
-      })
-    } 
+        } 
+      }
+    })
   }
 }
 

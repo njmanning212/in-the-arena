@@ -66,9 +66,24 @@ function show (req, res) {
   })
 }
 
+function edit (req, res) {
+  ToolType.findById(req.params.toolTypeId)
+  .then (toolType => {
+    res.render('toolTypes/edit', {
+      title: `Edit ${toolType.name}`,
+      toolType,
+    })
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect('/toolTypes')
+  })
+}
+
 export {
   newToolType as new,
   create,
   index,
   show,
+  edit,
 }

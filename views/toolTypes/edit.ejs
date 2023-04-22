@@ -1,0 +1,34 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <h1> Edit <%= toolType.name %></h1>
+  <form action="/toolTypes/<%= toolType._id %>?_method=PUT" method="POST">
+    <div>
+      <div>
+        <label for="name">Name</label>
+      </div>
+      <div>
+        <input type="text" name="name" id="name" autocomplete="off" value="<%= toolType.name %>"/>
+      </div>
+    </div>
+    <div>
+      <div>
+        <label for="description">Description</label>
+      </div>
+      <div>
+        <div>
+          <textarea type="text" name="description" id="description" maxlength="100"> <%= toolType.description %></textarea>
+        </div>
+        100 char max
+      </div>
+    </div>
+    <div>
+      <button type="submit">Edit Tool Type</button>
+    </div>
+  </form>
+  <form action="/toolTypes/<%= toolType._id %>?_method=DELETE" method="POST">
+    <button type="submit">Delete Tool Type</button>
+</main>
+
+<%- include('../partials/footer') %>

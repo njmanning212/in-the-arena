@@ -7,6 +7,7 @@ const router = Router()
 router.get('/', toolTypesCtrl.index)
 router.get('/new', isLoggedIn, toolTypesCtrl.new)
 router.get('/:toolTypeId', toolTypesCtrl.show)
+router.get('/:toolTypeId/edit', isLoggedIn, toolTypesCtrl.edit)
 router.post('/', isLoggedIn, toolTypesCtrl.create)
 
 export {

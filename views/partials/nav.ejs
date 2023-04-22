@@ -4,6 +4,12 @@
 </head>
 <body>
   <nav>
+    <i class="fas fa-plane fa-2x"></i>
+    <a 
+      href="/toolTypes/new" class=<%= title === 'Add Meal' ? 'active' : '' %>
+    >
+      ADD TOOL TYPE
+    </a>
     <% if (user) { %>
       <a href="/auth/logout" class="right">
         <button type="submit">Logout</button>

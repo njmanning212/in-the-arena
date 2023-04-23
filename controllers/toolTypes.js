@@ -134,9 +134,24 @@ function deleteToolType (req, res) {
   ToolType.findById(req.params.toolTypeId)
   .then (toolType => {
     if(toolType.author.equals(req.user.profile._id)) {
-      toolType.deleteOne()
-      .then (() => {
-        res.redirect('/toolTypes')
+      Profile.findById(req.user.profile._id)
+      .then (profile => {
+        profile.createdToolTypes.remove(toolType._id)
+        profile.save()
+        .then (() => {
+          toolType.deleteOne()
+          .then (() => {
+            res.redirect('/toolTypes')
+          })
+          .catch (err => {
+            console.log(err)
+            res.redirect(`/toolTypes/${toolType._id}`)
+          })
+        })
+        .catch (err => {
+        console.log(err)
+        res.redirect(`/toolTypes/${toolType._id}`)
+        })
       })
       .catch (err => {
         console.log(err)

@@ -109,9 +109,35 @@ function show (req, res) {
   })
 }
 
+function edit (req, res) {
+  ToolType.find({})
+  .then (toolTypes => {
+    Tool.findById(req.params.toolId)
+    .populate('type')
+    .then (tool => {
+      res.render('tools/edit', {
+        title: 'Edit Tool',
+        tool,
+        blankError: false,
+        duplicateError: false,
+        toolTypes
+      })
+    })
+    .catch (err => {
+      console.log(err)
+      res.redirect('/tools')
+    })
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect(`/tools/${tool._id}`)
+  })
+}
+
 export {
   index,
   newTool as new,
   create,
   show,
+  edit,
 }

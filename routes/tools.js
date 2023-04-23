@@ -6,6 +6,7 @@ const router = Router()
 
 router.get('/', toolsCtrl.index)
 router.get('/new', isLoggedIn, toolsCtrl.new)
+router.get('/:toolId', toolsCtrl.show)
 router.post('/', isLoggedIn, toolsCtrl.create)
 
 

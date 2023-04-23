@@ -93,8 +93,25 @@ function create (req, res) {
   })
 }
 
+function show (req, res) {
+  Tool.findById(req.params.toolId)
+  .populate('author')
+  .populate('type')
+  .then (tool => {
+    res.render('tools/show', {
+      title: 'Tool Details',
+      tool,
+    })
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect('/tools')
+  })
+}
+
 export {
   index,
   newTool as new,
   create,
+  show,
 }

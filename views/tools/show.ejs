@@ -1,0 +1,34 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <div>
+    <img src="<%= tool.imgSrc %>" alt="tool image">
+  </div>
+  <div>
+    <%= tool.imgAttribution %>
+  </div>
+  <h1> <%= tool.name %></h1>
+  <div>
+    created by <%= tool.author.name %>
+  </div>
+  <div>
+    difficulty level: <%= tool.difficulty %>
+  </div>
+  <div>
+    tool type: <%= tool.type.name %>
+  </div>
+  <div>
+    <h2>Instructions</h2>
+    <%= tool.instructions %>
+  </div>
+  <div>
+    <% if (tool.author.equals(user?.profile._id)) { %>
+      <a href="/toolTypes/<%= toolType.id %>/edit">
+        <button type="button">Edit/Delete</button>
+      </a>
+    <% } %>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

@@ -14,19 +14,12 @@
       <div>
         <h2>Name: <%= tool.name %></h2>
         <p>Created by: <%= tool.author.name %></p>
-        <p>
-          Instructions:
-          <%= tool.instructions %>
-        </p>
-        <p> Difficulty Level: <%= tool.difficulty %></p>
         <p> Tool Type: <%= tool.type.name %></p>
         <img src="<%= tool.imgSrc %>" alt="tool image">
         <p><%= tool.imgAttribution %></p>
-        <% if (user) { %>
-          <a href="/tools/<%= tool._id %>">
-            <button> Tool Details</button>
-          </a>
-        <% } %>
+        <a href="/tools/<%= tool._id %>">
+          <button> Tool Details</button>
+        </a>
       </div>
     <% }) %>
   </section>

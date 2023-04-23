@@ -2,8 +2,8 @@
 <%- include('../partials/nav') %>
 
 <main>
+  <h1> <%= title %></h1>
   <section>
-    <h1> <%= title %></h1>
     <form action="/tools" method="POST">
       <div>
         <div>
@@ -40,7 +40,7 @@
       </div>
       <div>
           <label for="toolTypeId">Tool Type</label>
-          <select name="toolTypeId" id="toolTypeId">
+          <select name="type" id="toolTypeId">
             <% toolTypes.forEach(function(toolType) { %>
               <option value="<%= toolType._id %>"><%= toolType.name %></option>
             <% }) %>

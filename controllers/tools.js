@@ -4,6 +4,8 @@ import { ToolType } from "../models/toolType.js";
 
 function index (req, res) {
   Tool.find({})
+  .populate('author')
+  .populate('type')
   .then (tools => {
     res.render('tools/index', {
       title: 'Tools',
@@ -32,7 +34,62 @@ function newTool (req, res) {
   })
 }
 
+function create (req, res) {
+  req.body.name = req.body.name.toUpperCase()
+  let checkArr = [req.body.name, req.body.instructions, req.body.imgSrc, req.body.imgAttribution]
+  if (checkArr.includes('')) {
+    res.render('tools/new', {
+      title: 'Add Tool',
+      blankError: true,
+      duplicateError: false,
+    })
+  } else {
+    Tool.findOne({name: req.body.name})
+    .then (duplicateTool => {
+      if (duplicateTool) {
+        res.render('tools/new', {
+          title: 'Add Tool',
+          blankError: false,
+          duplicateError: true,
+        })
+      } else {
+        if (req.user.profile._id) {     
+          req.body.author = req.user.profile._id
+          Tool.create(req.body)
+          .then (tool => {
+            Profile.findById(req.user.profile._id)
+            .then (profile => {
+              profile.createdTools.push(tool._id)
+              profile.save()
+              .then (() => {
+                res.redirect('/tools')
+              })
+              .catch(err => {
+                console.log(err)
+                res.redirect('/tools/new')
+              })
+            })
+            .catch(err => {
+              console.log(err)
+              res.redirect('/tools/new')
+            })
+          })
+          .catch (err => {
+            console.log(err)
+            res.redirect('/tools/new')
+          })
+        }
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/tools/new')
+    })
+  }
+}
+
 export {
   index,
   newTool as new,
+  create,
 }

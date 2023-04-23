@@ -6,7 +6,8 @@
     <img src="<%= tool.imgSrc %>" alt="tool image">
   </div>
   <div>
-    <%= tool.imgAttribution %>
+    <p>Image From <a href="<%= tool.imgOwnerLink %>"><%= tool.imgOwner %></a>
+    </p>
   </div>
   <h1> <%= tool.name %></h1>
   <div>
@@ -24,7 +25,7 @@
   </div>
   <div>
     <% if (tool.author.equals(user?.profile._id)) { %>
-      <a href="/toolTypes/<%= toolType.id %>/edit">
+      <a href="/tools/<%= tool._id %>/edit">
         <button type="button">Edit/Delete</button>
       </a>
     <% } %>

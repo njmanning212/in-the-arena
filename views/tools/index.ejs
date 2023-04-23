@@ -16,7 +16,7 @@
         <p>Created by: <%= tool.author.name %></p>
         <p> Tool Type: <%= tool.type.name %></p>
         <img src="<%= tool.imgSrc %>" alt="tool image">
-        <p><%= tool.imgAttribution %></p>
+        <p>Image from <a href="<%= tool.imgOwnerLink %>"><%= tool.imgOwner %></a></p>
         <a href="/tools/<%= tool._id %>">
           <button> Tool Details</button>
         </a>

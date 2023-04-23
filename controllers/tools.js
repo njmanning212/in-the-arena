@@ -16,6 +16,23 @@ function index (req, res) {
   })
 }
 
+function newTool (req, res) {
+  ToolType.find({})
+  .then (toolTypes => {
+    res.render('tools/new', {
+      title: 'Add Tool',
+      toolTypes,
+      blankError: false, 
+      duplicateError: false,
+    })
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect('/tools')
+  })
+}
+
 export {
   index,
+  newTool as new,
 }

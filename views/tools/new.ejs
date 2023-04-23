@@ -1,0 +1,68 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <section>
+    <h1> <%= title %></h1>
+    <form action="/tools" method="POST">
+      <div>
+        <div>
+          <label for="name">Name</label>
+          <input type="text" name="name" id="name" autocomplete="off"/>
+      </div>
+      <div>
+          <label for="instructions">Instructions</label>
+          <textarea type="text" name="instructions" id="instructions" maxlength="1500"></textarea>
+          1500 char max
+      </div>
+      <div>
+          <label for="imgSrc"> Link To Image</label>
+          <input type="text" name="imgSrc" id="imgSrc">
+      </div>
+      <div>
+          <label for="imgAttribution"> Owner of Image for Attribution</label>
+          <input type="text" name="imgAttribution" id="imgAttribution">
+      </div>
+      <div>
+          <label for="difficulty">Difficulty to Perform (0-10)</label>
+          <select name="difficulty" id="difficulty">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+      </div>
+      <div>
+          <label for="toolTypeId">Tool Type</label>
+          <select name="toolTypeId" id="toolTypeId">
+            <% toolTypes.forEach(function(toolType) { %>
+              <option value="<%= toolType._id %>"><%= toolType.name %></option>
+            <% }) %>
+          </select>
+      </div>
+      <div>
+        <button type="submit">Add Tool</button>
+      </div>
+    </form>
+  </section>
+
+  <% if (blankError) { %>
+    <div>
+      <h2>Please don't leave any fields blank</h2>
+    </div>
+  <% } %>
+  <% if (duplicateError) { %>
+    <div>
+      <h2>That tool already exists</h2>
+    </div>
+  <% } %>
+
+</main>
+
+<%- include('../partials/footer') %>

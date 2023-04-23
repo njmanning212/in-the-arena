@@ -38,7 +38,7 @@ function create (req, res) {
   ToolType.find({})
   .then (toolTypes => {
     req.body.name = req.body.name.toUpperCase()
-    let checkArr = [req.body.name, req.body.instructions, req.body.imgSrc, req.body.imgAttribution]
+    let checkArr = [req.body.name, req.body.instructions, req.body.imgSrc, req.body.imgOwner, req.body.imgOwnerLink]
     if (checkArr.includes('')) {
       res.render('tools/new', {
         title: 'Add Tool',
@@ -134,10 +134,69 @@ function edit (req, res) {
   })
 }
 
+function update (req, res) {
+  req.body.name = req.body.name.toUpperCase()
+  let checkArr = [req.body.name, req.body.instructions, req.body.imgSrc, req.body.imgOwner, req.body.imgOwnerLink]
+  ToolType.find({})
+  .then (toolTypes => {
+    Tool.findOne({name: req.body.name})
+    .then (duplicateTool => {
+      if (duplicateTool && !duplicateTool._id.equals(req.params.toolId)) {
+        Tool.findById(req.params.toolId)
+        .populate('type')
+        .then (tool => {
+          res.render('tools/edit', {
+            title: 'Edit Tool',
+            tool,
+            blankError: false,
+            duplicateError: true,
+            toolTypes
+          })
+        })
+        .catch (err => {
+          console.log(err)
+          res.redirect('/tools')
+        })
+      } else {
+        Tool.findById(req.params.toolId)
+        .then (tool => {
+          if (checkArr.includes('')) {
+            res.render('tools/edit', {
+              title: 'Edit Tool',
+              tool,
+              blankError: true,
+              duplicateError: false,
+              toolTypes
+            })
+          } else if (tool.author.equals(req.user.profile._id)){
+            tool.updateOne(req.body)
+            .then (() => {
+              res.redirect(`/tools/${tool._id}`)
+            })
+            .catch (err => {
+              console.log(err)
+              res.redirect(`/tools/${tool._id}`)
+            })
+          }
+        })
+        .catch (err => {
+          console.log(err)
+          res.redirect('/tools')
+        })
+      }
+    })
+    .catch (err => {
+      console.log(err)
+      res.redirect('/tools')
+    })
+  })
+}
+
 export {
   index,
   newTool as new,
   create,
   show,
   edit,
+  update,
 }

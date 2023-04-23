@@ -192,6 +192,41 @@ function update (req, res) {
   })
 }
 
+function deleteTool (req, res) {
+  Tool.findById(req.params.toolId)
+  .then (tool => {
+    if (tool.author.equals(req.user.profile._id)) {
+      tool.deleteOne()
+      .then (() => {
+        Profile.findById(req.user.profile._id)
+        .then (profile => {
+          profile.createdTools.remove(tool._id)
+          profile.save()
+          .then (() => {
+            res.redirect('/tools')
+          })
+          .catch (err => {
+            console.log(err)
+            res.redirect(`/tools/${tool._id}`)
+          })
+        })
+        .catch (err => {
+          console.log(err)
+          res.redirect(`/tools/${tool._id}`)
+        })
+      })
+      .catch (err => {
+        console.log(err)
+        res.redirect(`/tools/${tool._id}`)
+      })
+    }
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect('/tools')
+  })
+}
+
 export {
   index,
   newTool as new,
@@ -199,4 +234,5 @@ export {
   show,
   edit,
   update,
+  deleteTool as delete,
 }

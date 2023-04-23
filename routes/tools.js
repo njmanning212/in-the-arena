@@ -10,6 +10,7 @@ router.get('/:toolId', toolsCtrl.show)
 router.get('/:toolId/edit', isLoggedIn, toolsCtrl.edit)
 router.post('/', isLoggedIn, toolsCtrl.create)
 router.put('/:toolId', isLoggedIn, toolsCtrl.update)
+router.delete('/:toolId', isLoggedIn, toolsCtrl.delete)
 
 
 export {

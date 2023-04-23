@@ -41,7 +41,7 @@
       <div>
           <label for="toolTypeId">Tool Type</label>
           <select name="type" id="toolTypeId">
-            <% toolTypes.forEach(function(toolType) { %>
+            <% toolTypes.forEach(toolType => { %>
               <option value="<%= toolType._id %>"><%= toolType.name %></option>
             <% }) %>
           </select>

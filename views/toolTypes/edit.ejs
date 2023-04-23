@@ -35,6 +35,11 @@
       <h2>Please don't leave any fields blank</h2>
     </div>
   <% } %>
+  <% if (duplicateError) { %>
+    <div>
+      <h2>That tool type already exists</h2>
+    </div>
+  <% } %>
 </main>
 
 <%- include('../partials/footer') %>

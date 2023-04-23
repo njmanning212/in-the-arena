@@ -95,6 +95,7 @@ function edit (req, res) {
       title: `Edit ${toolType.name}`,
       toolType,
       blankError: false,
+      duplicateError: false,
     })
   })
   .catch (err => {
@@ -104,30 +105,51 @@ function edit (req, res) {
 }
 
 function update (req, res) {
+  req.body.name = req.body.name.toUpperCase()
   let checkArr = [req.body.name, req.body.description]
-    ToolType.findById(req.params.toolTypeId)
-    .then (toolType => {
-      if (checkArr.includes('')) {
+  ToolType.findOne({name: req.body.name})
+  .then (duplicateToolType => {
+    if (duplicateToolType && !duplicateToolType._id.equals(req.params.toolTypeId)) {
+      ToolType.findById(req.params.toolTypeId)
+      .then (toolType => {
         res.render('toolTypes/edit', {
           title: `Edit ${toolType.name}`,
           toolType,
-          blankError: true,
+          blankError: false,
+          duplicateError: true,
         })
-      } else if(toolType.author.equals(req.user.profile._id)) {
-        toolType.updateOne(req.body)
-        .then (() => {
-          res.redirect(`/toolTypes/${toolType._id}`)
-        })
-        .catch (err => {
-          console.log(err)
-          res.redirect(`/toolTypes/${toolType._id}/edit`)
-        })
-      }
-    })
-    .catch (err => {
-      console.log(err)
-      res.redirect('/toolTypes')
-    })
+      })
+      .catch (err => {
+        console.log(err)
+        res.redirect('/toolTypes')
+      })
+    } else {
+      ToolType.findById(req.params.toolTypeId)
+      .then (toolType => {
+        if (checkArr.includes('')) {
+          res.render('toolTypes/edit', {
+            title: `Edit ${toolType.name}`,
+            toolType,
+            blankError: true,
+            duplicateError: false,
+          })
+        } else if (toolType.author.equals(req.user.profile._id)) {
+          toolType.updateOne(req.body)
+          .then (() => {
+            res.redirect(`/toolTypes/${toolType._id}`)
+          })
+          .catch (err => {
+            console.log(err)
+            res.redirect(`/toolTypes/${toolType._id}/edit`)
+          })
+        }
+      })
+      .catch (err => {
+        console.log(err)
+        res.redirect('/toolTypes')
+      })
+    }
+  })
 }
 
 function deleteToolType (req, res) {

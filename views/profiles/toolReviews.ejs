@@ -1,0 +1,26 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <h1><%= title %></h1>
+  <section>
+    <% reviews.forEach(review => { %>
+      <div>
+        <h2>Review for: <%= review.tool.name %></h2>
+        <p> <%= review.content %> %></p>
+        <p>Rating: <%= review.rating %></p>
+        <p><%= review.createdAt.toLocaleDateString() %></p>
+        <a href="/tools/<%= review.tool._id %>">
+          <button> Tool Details</button>
+        </a>
+        <% if (review.author.equals(user.profile._id)) { %>
+          <a href="/tools/<%= review.tool._id %>/reviews/<%= review._id %>/edit">
+            <button>Edit Review</button>
+          </a>
+        <% } %>
+      </div>
+    <% }) %>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

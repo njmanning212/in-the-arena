@@ -7,6 +7,7 @@ const router = Router()
 router.get('/', profilesCtrl.index)
 router.get('/:profileId', profilesCtrl.show)
 router.get('/:profileId/createdTools', isLoggedIn, profilesCtrl.createdToolsIndex)
+router.get('/:profileId/toolReviews', isLoggedIn, profilesCtrl.toolReviewsIndex)
 
 export {
   router

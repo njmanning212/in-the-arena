@@ -58,8 +58,32 @@ function createdToolsIndex (req, res) {
   })
 }
 
+function toolReviewsIndex (req, res) {
+  Profile.findById(req.params.profileId)
+  .then(profile => {
+    Review.find({author: profile._id})
+    .populate('tool')
+    .then(reviews => {
+      res.render('profiles/toolReviews', {
+        title: `${profile.name}'s Reviews`,
+        reviews,
+        profile
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/')
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/')
+  })
+}
+
 export {
   index,
   show,
   createdToolsIndex,
+  toolReviewsIndex,
 }

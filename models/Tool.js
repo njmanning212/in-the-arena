@@ -11,6 +11,8 @@ const toolSchema = new Schema({
   difficulty: { type: Number, min: 1, max: 3 },
   author: { type: Schema.Types.ObjectId, ref: 'Profile' },
   type: { type: Schema.Types.ObjectId, ref: 'ToolType' },
+  reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+  averageRating: Number,
 }, {
   timestamps: true
 })

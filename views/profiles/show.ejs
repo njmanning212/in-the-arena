@@ -11,23 +11,51 @@
     <div>
       <h2>Created Tools: <%= profile.createdTools.length %></h2>
       <% if (user) { %>
-            <div>
-              <a href="/profiles/<%= profile._id %>/createdTools">
-                <button> See Created Tools</button>
-              </a>
-            </div>
+        <div>
+          <a href="/profiles/<%= profile._id %>/createdTools">
+            <button> See Created Tools</button>
+          </a>
+        </div>
       <% } %>
       <h2>Tool Reviews: <%= profile.reviews.length %></h2>
       <% if (user) { %>
-            <div>
-              <a href="/profiles/<%= profile._id %>/toolReviews">
-                <button> See Reviews</button>
-              </a>
-            </div>
-        <% } %>
-      <% if (!user) { %>
-        <p>Log in to see more</p>
+        <div>
+          <a href="/profiles/<%= profile._id %>/toolReviews">
+            <button> See Reviews</button>
+          </a>
+        </div>
       <% } %>
+    </div>
+    <% if (!user) { %>
+      <p>Log in to see more</p>
+    <% } %>
+  </section>
+  <section>
+    <h2>Top 3 Favorite Tools:</h2>
+    <% if (profile.favoriteTools.length === 0) { %>
+      <p>No favorite tools yet</p>
+    <% } else { %>
+      <% profile.favoriteTools.forEach(favoriteTool => { %>
+        <div>
+          <img src="<%= favoriteTool.image %>" alt=" <%= favoriteTool.name %>">
+          <p><%= favoriteTool.name %></p>
+          <p><%= favoriteTool.description %></p>
+          <% if (favoriteTool.averageRating) { %>
+            <p> Average Rating: <%= favoriteTool.averageRating %></p>
+          <% } %>
+          <a href="/tools/<%= favoriteTool._id %>">
+            <button> Tool Details</button>
+          </a>
+          <% if (profile._id.equals(user?.profile._id)) { %>
+            <form action="/profiles/<%= profile._id %>/favoriteTools/<%= favoriteTool._id %>?_method=DELETE" method="POST">
+              <button type="submit">Remove from Favorites</button>
+            </form>
+          <% } %>
+        </div>
+      <% }) %>
+    <% } %>
+  </section>
+
     </div>
 </main>
 

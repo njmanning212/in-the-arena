@@ -21,6 +21,7 @@ function index (req, res) {
 
 function show (req, res) {
   Profile.findById(req.params.profileId)
+  .populate('favoriteTools')
   .populate('createdTools')
   .populate('reviews')
   .then(profile => {
@@ -81,9 +82,59 @@ function toolReviewsIndex (req, res) {
   })
 }
 
+function addFavoriteTool (req, res) {
+  Profile.findById(req.params.profileId)
+  .then(profile => {
+    if (profile.favoriteTools.length < 3) {
+      profile.favoriteTools.push(req.params.toolId)
+      profile.save()
+      .then(() => {
+        res.redirect(`/profiles/${profile._id}`)
+      })
+      .catch(err => {
+        console.log(err)
+        res.redirect('/')
+      })
+    }
+    else {
+      res.redirect(`/profiles/${profile._id}`)
+    }
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/')
+  })
+}
+
+function removeFavoriteTool (req, res) {
+  Profile.findById(req.params.profileId)
+  .then(profile => {
+    if (profile._id.equals(req.user.profile._id)) {
+      profile.favoriteTools.remove(req.params.toolId)
+      profile.save()
+      .then(() => {
+        res.redirect(`/profiles/${profile._id}`)
+      })
+      .catch(err => {
+        console.log(err)
+        res.redirect('/')
+      })
+    } else {
+      res.redirect(`/profiles/${profile._id}`)
+    }
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/')
+  })
+}
+
+
 export {
   index,
   show,
   createdToolsIndex,
   toolReviewsIndex,
+  addFavoriteTool,
+  removeFavoriteTool,
 }

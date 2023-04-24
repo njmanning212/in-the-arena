@@ -29,6 +29,12 @@
       </a>
   </div>
   <div>
+    <form action="/profiles/<%= user.profile._id %>/favoriteTools/<%= tool._id %>"
+    method="POST">
+    <button type="submit">Add to Favorites</button>
+    </form>
+  </div>
+  <div>
     <% if (tool.author.equals(user?.profile._id)) { %>
       <a href="/tools/<%= tool._id %>/edit">
         <button type="button">Edit Tool</button>

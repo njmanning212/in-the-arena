@@ -1,0 +1,14 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <section>
+  <h1> <%= title %> for <%= tool.name %></h1>
+  <% if (user) { %>
+    <a href="/tools/<%= tool._id %>/reviews/new">
+      <button type="button">Add Review</button>
+    </a>
+  <% } %>
+  </section>
+
+<%- include('../partials/footer') %>

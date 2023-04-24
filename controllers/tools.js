@@ -1,6 +1,7 @@
 import { Profile } from "../models/profile.js";
 import { Tool } from "../models/tool.js";
 import { ToolType } from "../models/toolType.js";
+import { Review } from "../models/review.js";
 
 function index (req, res) {
   Tool.find({})
@@ -227,6 +228,16 @@ function deleteTool (req, res) {
   })
 }
 
+function reviewsIndex (req, res) {
+  Tool.findById(req.params.toolId)
+  .then (tool => {
+    res.render('reviews/index', {
+      title: 'Reviews',
+      tool,
+    })
+  })
+}
+
 export {
   index,
   newTool as new,
@@ -235,4 +246,5 @@ export {
   edit,
   update,
   deleteTool as delete,
+  reviewsIndex,
 }

@@ -16,6 +16,7 @@ router.post('/:toolId/reviews', isLoggedIn, toolsCtrl.createReview)
 router.put('/:toolId', isLoggedIn, toolsCtrl.update)
 router.put('/:toolId/reviews/:reviewId', isLoggedIn, toolsCtrl.updateReview)
 router.delete('/:toolId', isLoggedIn, toolsCtrl.delete)
+router.delete('/:toolId/reviews/:reviewId', isLoggedIn, toolsCtrl.deleteReview)
 
 
 export {

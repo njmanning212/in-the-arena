@@ -409,6 +409,70 @@ function updateReview (req, res) {
   })
 }
 
+function deleteReview (req, res) {
+  Review.findById(req.params.reviewId)
+  .then (review => {
+    if (review.author.equals(req.user.profile._id)) {
+      review.deleteOne()
+      .then (() => {
+        Profile.findById(req.user.profile._id)
+        .then (profile => {
+          profile.reviews.remove(req.params.reviewId)
+          profile.save()
+          .then (() => {
+            Tool.findById(req.params.toolId)
+            .then (tool => {
+              tool.reviews.remove(req.params.reviewId)
+              tool.save()
+              .then (() => {
+                Review.find({tool: tool._id})
+                .then (reviews => {
+                  let sum = 0
+                  reviews.forEach(review => {
+                    sum += review.rating
+                  })
+                  let avg = sum / reviews.length
+                  tool.averageRating = Math.floor(avg)
+                  tool.save()
+                  .then (() => {
+                    res.redirect(`/tools/${tool._id}/reviews`)
+                  })
+                  .catch (err => {
+                    console.log(err)
+                    res.redirect(`/tools/${tool._id}/reviews`)
+                  })
+                })
+              })
+              .catch (err => {
+                console.log(err)
+                res.redirect(`/tools/${tool._id}/reviews`)
+              })
+            })
+            .catch (err => {
+              console.log(err)
+              res.redirect(`/tools/${tool._id}/reviews`)
+            })
+          })
+          .catch (err => {
+            console.log(err)
+            res.redirect(`/tools/${tool._id}/reviews`)
+          })
+        })
+        .catch (err => {
+          console.log(err)
+          res.redirect(`/tools/${tool._id}/reviews`)
+        })
+      })
+      .catch (err => {
+        console.log(err)
+        res.redirect(`/tools/${tool._id}/reviews`)
+      })
+    } else {
+      res.redirect(`/tools/${tool._id}/reviews`)
+    }
+  })
+}
+
 export {
   index,
   newTool as new,
@@ -422,4 +486,5 @@ export {
   createReview,
   editReview,
   updateReview,
+  deleteReview,
 }

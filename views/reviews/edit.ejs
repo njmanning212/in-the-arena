@@ -29,6 +29,15 @@
     <% } %>
   </form>
 
+  <form action="/tools/<%= tool._id %>/reviews/<%= review._id %>?_method=DELETE"
+    method="POST">
+    <% if (review.author.equals(user?.profile._id)) { %>
+      <div>
+        <button type="submit">Delete Review</button>
+      </div>
+    <% } %>
+  </form>
+
   <% if (blankError) { %>
     <div>
       <h2>Please don't leave any fields blank</h2>

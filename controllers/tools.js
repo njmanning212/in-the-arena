@@ -333,6 +333,31 @@ function createReview (req, res) {
   })
 }
 
+function editReview (req, res) {
+  Tool.findById(req.params.toolId)
+  .then (tool => {
+    Review.findById(req.params.reviewId)
+    .populate('author')
+    .then (review => {
+      if (review.author.equals(req.user.profile._id)) {
+        res.render('reviews/edit', {
+          title: 'Edit Review',
+          review,
+          tool,
+          blankError: false,
+        })
+      }
+    })
+    .catch (err => {
+      console.log(err)
+      res.redirect(`/tools/${tool._id}/reviews`)
+    })
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect(`/tools/${tool._id}/reviews`)
+  })
+}
 
 export {
   index,
@@ -345,4 +370,5 @@ export {
   reviewsIndex,
   newReview,
   createReview,
+  editReview,
 }

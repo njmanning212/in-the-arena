@@ -21,6 +21,7 @@
         <p><%= review.author.name %></p>
         <p><%= review.content %></p>
         <p>Rating: <%= review.rating %></p>
+        <p><%= review.createdAt.toLocaleDateString() %></p>
       </div>
     <% }) %>
     

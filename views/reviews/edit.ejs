@@ -5,15 +5,16 @@
   <section>
   <h1> <%= title %> for <%= tool.name %></h1>
 
-  <form action="/tools/<%= tool._id %>/reviews"
+  <form action="/tools/<%= tool._id %>/reviews/<%= review._id %>?_method=PUT"
     method="POST">
     <div>
       <label for="content"></label>
-      <textarea name="content" id="content" cols="30" rows="10"></textarea>
+      <textarea name="content" id="content" cols="30" rows="10"><%= review.content %></textarea>
     </div>
     <div>
       <label for="rating">Rating</label>
       <select name="rating" id="rating">
+        <option value="<%= review.rating %>"><%= review.rating %></option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -21,19 +22,18 @@
         <option value="5">5</option>
       </select>
     </div>
-    <% if (user) { %>
+    <% if (review.author.equals(user?.profile._id)) { %>
       <div>
-        <button type="submit">Add Review</button>
+        <button type="submit">Edit Review</button>
       </div>
     <% } %>
-
-    <% if (blankError) { %>
-      <div>
-        <h2>Please don't leave any fields blank</h2>
-      </div>
-    <% } %>
-
   </form>
+
+  <% if (blankError) { %>
+    <div>
+      <h2>Please don't leave any fields blank</h2>
+    </div>
+  <% } %>
   </section>
 
 <%- include('../partials/footer') %>

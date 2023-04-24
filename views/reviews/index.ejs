@@ -2,9 +2,13 @@
 <%- include('../partials/nav') %>
 
 <main>
-  <section>
   <h1> <%= title %> for <%= tool.name %></h1>
-  <% if (user) { %>
+  <% let userReview = tool.reviews.find(review => review.author.equals(user?.profile._id)) %>
+  <% if (userReview) { %>
+    <a href="/tools/<%= tool._id %>/reviews/<%= userReview._id %>/edit">
+      <button type="button">Edit Review</button>
+    </a>
+  <% } else if (user) { %>
     <a href="/tools/<%= tool._id %>/reviews/new">
       <button type="button">Add Review</button>
     </a>
@@ -13,23 +17,15 @@
   <div>
     <% tool.reviews.forEach(review => { %>
       <div>
+        <img src="<%= review.author.avatar %>" alt=" <%= review.author.name %>">
+        <p><%= review.author.name %></p>
         <p><%= review.content %></p>
         <p>Rating: <%= review.rating %></p>
-        <p>Created by: <%= review.author.name %></p>
-        <% if (review.author.equals(user?.profile._id)) { %>
-          <a href="/tools/<%= tool._id %>/reviews/<%= review._id %>/edit">
-            <button type="button">Edit Review</button>
-          </a>
-        <% } %>
-        <% if (review.author.equals(user?.profile._id)) { %>
-          <form action="/tools/<%= tool._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
-            <button type="submit">Delete Review</button>
-          </form>
-        <% } %>
       </div>
     <% }) %>
     
   </div>
   </section>
+</main>
 
 <%- include('../partials/footer') %>

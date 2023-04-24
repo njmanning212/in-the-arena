@@ -35,7 +35,31 @@ function show (req, res) {
   })
 }
 
+function createdToolsIndex (req, res) {
+  Profile.findById(req.params.profileId)
+  .then(profile => {
+    Tool.find({author: profile._id})
+    .populate('type')
+    .then(tools => {
+      res.render('profiles/createdTools', {
+        title: `${profile.name}'s Tools`,
+        tools,
+        profile
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/')
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/')
+  })
+}
+
 export {
   index,
   show,
+  createdToolsIndex,
 }

@@ -1,0 +1,28 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<main>
+  <h1><%= title %></h1>
+  <section>
+    <% tools.forEach(tool => { %>
+      <div>
+        <h2>Name: <%= tool.name %></h2>
+        <p> Tool Type: <%= tool.type.name %></p>
+        <img src="<%= tool.imgSrc %>" alt="tool image">
+        <% if (tool.averageRating) { %>
+          <p> Average Rating: <%= tool.averageRating %></p>
+        <% } %>
+        <a href="/tools/<%= tool._id %>">
+          <button> Tool Details</button>
+        </a>
+        <% if (tool.author.equals(user.profile._id)) { %>
+          <a href="/tools/<%= tool._id %>/edit">
+            <button>Edit Tool</button>
+          </a>
+        <% } %>
+      </div>
+    <% }) %>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

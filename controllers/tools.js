@@ -228,15 +228,28 @@ function deleteTool (req, res) {
   })
 }
 
-function reviewsIndex (req, res) {
+function reviewsIndex(req, res) {
   Tool.findById(req.params.toolId)
-  .then (tool => {
+  .populate('reviews')
+  .populate({
+    path: 'reviews',
+    populate: {
+      path: 'author',
+      model: 'Profile'
+    }
+  })
+  .then((tool) => {
     res.render('reviews/index', {
       title: 'Reviews',
       tool,
     })
   })
+  .catch((err) => {
+    console.log(err)
+    res.redirect('/tools')
+  })
 }
+
 
 function newReview (req, res) {
   Tool.findById(req.params.toolId)
@@ -253,6 +266,73 @@ function newReview (req, res) {
   })
 }
 
+function createReview (req, res) {
+  req.body.author = req.user.profile._id
+  req.body.tool = req.params.toolId
+  Tool.findById(req.params.toolId)
+  .then (tool => {
+    if (req.body.content === '') {
+      res.render('reviews/new', {
+        title: 'Add Review',
+        tool,
+        blankError: true,
+      })
+    } else {
+      Review.create(req.body)
+      .then (review => {
+        tool.reviews.push(review._id)
+        tool.save()
+        .then (tool => {
+          Profile.findById(req.user.profile._id)
+          .then (profile => {
+            profile.reviews.push(review._id)
+            profile.save()
+            .then (() => {
+              Review.find({tool: tool._id})
+              .then (reviews => {
+                let sum = 0
+                reviews.forEach(review => {
+                  sum += review.rating
+                })
+                let avg = sum / reviews.length
+                tool.averageRating = Math.floor(avg)
+                tool.save()
+                .then (() => {
+                  res.redirect(`/tools/${tool._id}/reviews`)
+                })
+                .catch (err => {
+                  console.log(err)
+                  res.redirect(`/tools/${tool._id}/reviews/new`)
+                })
+              })
+            })
+            .catch (err => {
+              console.log(err)
+              res.redirect(`/tools/${tool._id}/reviews/new`)
+            })
+          })
+          .catch (err => {
+            console.log(err)
+            res.redirect(`/tools/${tool._id}/reviews/new`)
+          })
+        })
+        .catch (err => {
+          console.log(err)
+          res.redirect(`/tools/${tool._id}/reviews/new`)
+        })
+      })
+      .catch (err => {
+        console.log(err)
+        res.redirect(`/tools/${tool._id}/reviews/new`)
+      })
+    }
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect(`/tools/${tool._id}/reviews/new`)
+  })
+}
+
 
 export {
   index,
@@ -264,4 +344,5 @@ export {
   deleteTool as delete,
   reviewsIndex,
   newReview,
+  createReview,
 }

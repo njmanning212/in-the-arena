@@ -9,6 +9,27 @@
       <button type="button">Add Review</button>
     </a>
   <% } %>
+
+  <div>
+    <% tool.reviews.forEach(review => { %>
+      <div>
+        <p><%= review.content %></p>
+        <p>Rating: <%= review.rating %></p>
+        <p>Created by: <%= review.author.name %></p>
+        <% if (review.author.equals(user?.profile._id)) { %>
+          <a href="/tools/<%= tool._id %>/reviews/<%= review._id %>/edit">
+            <button type="button">Edit Review</button>
+          </a>
+        <% } %>
+        <% if (review.author.equals(user?.profile._id)) { %>
+          <form action="/tools/<%= tool._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+            <button type="submit">Delete Review</button>
+          </form>
+        <% } %>
+      </div>
+    <% }) %>
+    
+  </div>
   </section>
 
 <%- include('../partials/footer') %>

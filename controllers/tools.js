@@ -359,6 +359,56 @@ function editReview (req, res) {
   })
 }
 
+function updateReview (req, res) {
+  Tool.findById(req.params.toolId)
+  .then (tool => {
+    Review.findById(req.params.reviewId)
+    .then (review => {
+      if (req.body.content === '') {
+        res.render('reviews/edit', {
+          title: 'Edit Review',
+          review,
+          tool,
+          blankError: true,
+        })
+      } else if (review.author.equals(req.user.profile._id)) {
+        review.updateOne(req.body)
+        .then (() => {
+          Review.find({tool: tool._id})
+          .then (reviews => {
+            let sum = 0
+            reviews.forEach(review => {
+              sum += review.rating
+            })
+            let avg = sum / reviews.length
+            tool.averageRating = Math.floor(avg)
+            tool.save()
+            .then (() => {
+              res.redirect(`/tools/${tool._id}/reviews`)
+            })
+            .catch (err => {
+              console.log(err)
+              res.redirect(`/tools/${tool._id}/reviews`)
+            })
+          })
+        })
+        .catch (err => {
+          console.log(err)
+          res.redirect(`/tools/${tool._id}/reviews`)
+        })
+      }
+    })
+    .catch (err => {
+      console.log(err)
+      res.redirect(`/tools/${tool._id}/reviews`)
+    })
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect(`/tools/${tool._id}/reviews`)
+  })
+}
+
 export {
   index,
   newTool as new,
@@ -371,4 +421,5 @@ export {
   newReview,
   createReview,
   editReview,
+  updateReview,
 }

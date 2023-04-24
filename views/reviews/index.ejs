@@ -15,15 +15,19 @@
   <% } %>
 
   <div>
-    <% tool.reviews.forEach(review => { %>
-      <div>
-        <img src="<%= review.author.avatar %>" alt=" <%= review.author.name %>">
-        <p><%= review.author.name %></p>
-        <p><%= review.content %></p>
-        <p>Rating: <%= review.rating %></p>
-        <p><%= review.createdAt.toLocaleDateString() %></p>
-      </div>
-    <% }) %>
+    <% if (tool.reviews.length === 0) { %>
+      <h2>No Reviews Yet</h2>
+    <% } else { %>
+      <% tool.reviews.forEach(review => { %>
+        <div>
+          <img src="<%= review.author.avatar %>" alt=" <%= review.author.name %>">
+          <p><%= review.author.name %></p>
+          <p><%= review.content %></p>
+          <p>Rating: <%= review.rating %></p>
+          <p><%= review.createdAt.toLocaleDateString() %></p>
+        </div>
+      <% }) %>
+    <% } %>
     
   </div>
   </section>

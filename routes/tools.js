@@ -14,6 +14,7 @@ router.get('/:toolId/reviews/:reviewId/edit', isLoggedIn, toolsCtrl.editReview)
 router.post('/', isLoggedIn, toolsCtrl.create)
 router.post('/:toolId/reviews', isLoggedIn, toolsCtrl.createReview)
 router.put('/:toolId', isLoggedIn, toolsCtrl.update)
+router.put('/:toolId/reviews/:reviewId', isLoggedIn, toolsCtrl.updateReview)
 router.delete('/:toolId', isLoggedIn, toolsCtrl.delete)
 
 

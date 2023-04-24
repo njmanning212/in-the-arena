@@ -238,6 +238,22 @@ function reviewsIndex (req, res) {
   })
 }
 
+function newReview (req, res) {
+  Tool.findById(req.params.toolId)
+  .then (tool => {
+    res.render('reviews/new', {
+      title: 'Add Review',
+      tool,
+      blankError: false,
+    })
+  })
+  .catch (err => {
+    console.log(err)
+    res.redirect('/tools')
+  })
+}
+
+
 export {
   index,
   newTool as new,
@@ -247,4 +263,5 @@ export {
   update,
   deleteTool as delete,
   reviewsIndex,
+  newReview,
 }

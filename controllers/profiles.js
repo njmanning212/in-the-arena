@@ -59,6 +59,28 @@ function createdToolsIndex (req, res) {
   })
 }
 
+function createdToolsTypesIndex (req, res) {
+  Profile.findById(req.params.profileId)
+  .then(profile => {
+    ToolType.find({author: profile._id})
+    .then(toolTypes => {
+      res.render('profiles/createdToolTypes', {
+        title: `${profile.name}'s Tool Types`,
+        toolTypes,
+        profile
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/')
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/')
+  })
+}
+
 function toolReviewsIndex (req, res) {
   Profile.findById(req.params.profileId)
   .then(profile => {
@@ -137,4 +159,5 @@ export {
   toolReviewsIndex,
   addFavoriteTool,
   removeFavoriteTool,
+  createdToolsTypesIndex,
 }

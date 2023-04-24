@@ -17,6 +17,14 @@
           </a>
         </div>
       <% } %>
+      <h2>Created Tool Types: <%= profile.createdToolTypes.length %></h2>
+      <% if (user) { %>
+        <div>
+          <a href="/profiles/<%= profile._id %>/createdToolTypes">
+            <button> See Created Tool Types</button>
+          </a>
+        </div>
+      <% } %>
       <h2>Tool Reviews: <%= profile.reviews.length %></h2>
       <% if (user) { %>
         <div>

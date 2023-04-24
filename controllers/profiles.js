@@ -19,6 +19,23 @@ function index (req, res) {
 }
 
 
+function show (req, res) {
+  Profile.findById(req.params.profileId)
+  .populate('createdTools')
+  .populate('reviews')
+  .then(profile => {
+    res.render('profiles/show', {
+      title: `${profile.name}'s Profile`,
+      profile
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/')
+  })
+}
+
 export {
   index,
+  show,
 }

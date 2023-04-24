@@ -8,7 +8,7 @@ const toolSchema = new Schema({
   imgSrc: String,
   imgOwner: String,
   imgOwnerLink: String,
-  difficulty: { type: Number, min: 1, max: 3 },
+  difficulty: { type: Number, min: 1, max: 5},
   author: { type: Schema.Types.ObjectId, ref: 'Profile' },
   type: { type: Schema.Types.ObjectId, ref: 'ToolType' },
   reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],

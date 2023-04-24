@@ -2,15 +2,16 @@
 <%- include('../partials/nav') %>
 
 <main>
-  <h1>hello, <%= user ? user.profile.name : "friend" %></h1>
-  <% if (user?.profile.avatar) { %>
+  <h1><%= title %></h1>
+  <% profiles.forEach(profile => { %>
     <div>
-      <img
-        src="<%= user.profile.avatar %>"
-        alt="<%= user.profile.name %> avatar"
-      />
+      <img src="<%= profile.avatar %>" alt=" <%= profile.name %>">
+      <p><%= profile.name %></p>
+      <a href="/profiles/<%= profile._id %>">
+        <button>Profile Details</button>
+      </a>
     </div>
-  <% } %>
+  <% }) %>
 </main>
 
 <%- include('../partials/footer') %>

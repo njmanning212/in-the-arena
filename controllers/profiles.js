@@ -4,6 +4,21 @@ import { ToolType } from "../models/toolType.js";
 import { Review } from "../models/review.js";
 
 
+function index (req, res) {
+  Profile.find({})
+  .then(profiles => {
+      res.render('profiles/index', {
+          title: 'Profiles',
+          profiles
+      })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/')
+  })
+}
+
+
 export {
-  
+  index,
 }

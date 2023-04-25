@@ -18,23 +18,46 @@ function index (req, res) {
   })
 }
 
-
-function show (req, res) {
+function show(req, res) {
   Profile.findById(req.params.profileId)
-  .populate('favoriteTools')
-  .populate('createdTools')
-  .populate('reviews')
   .then(profile => {
-    res.render('profiles/show', {
-      title: `${profile.name}'s Profile`,
-      profile
-    })
+    Tool.find({ author: profile._id })
+      .populate('type')
+      .then(tools => {
+        Review.find({ author: profile._id })
+          .populate('tool')
+          .then(reviews => {
+            ToolType.find({ author: profile._id })
+              .then(toolTypes => {
+                res.render('profiles/show', {
+                  title: `${profile.name}'s Profile`,
+                  profile,
+                  tools,
+                  reviews,
+                  toolTypes
+                });
+              })
+              .catch(err => {
+                console.error(err);
+                res.redirect(`/profiles/${req.params.profileId}`);
+              });
+          })
+          .catch(err => {
+            console.error(err);
+            res.redirect(`/profiles/${req.params.profileId}`);
+          });
+      })
+      .catch(err => {
+        console.error(err);
+        res.redirect(`/profiles/${req.params.profileId}`);
+      });
   })
   .catch(err => {
-    console.log(err)
-    res.redirect('/')
-  })
+    console.error(err);
+    res.redirect('/');
+  });
 }
+
 
 function createdToolsIndex (req, res) {
   Profile.findById(req.params.profileId)

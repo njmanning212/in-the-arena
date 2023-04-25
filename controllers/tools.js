@@ -62,22 +62,7 @@ function create (req, res) {
             req.body.author = req.user.profile._id
             Tool.create(req.body)
             .then (tool => {
-              Profile.findById(req.user.profile._id)
-              .then (profile => {
-                profile.createdTools.push(tool._id)
-                profile.save()
-                .then (() => {
-                  res.redirect('/tools')
-                })
-                .catch(err => {
-                  console.log(err)
-                  res.redirect('/tools/new')
-                })
-              })
-              .catch(err => {
-                console.log(err)
-                res.redirect('/tools/new')
-              })
+              res.redirect('/tools')              
             })
             .catch (err => {
               console.log(err)
@@ -199,22 +184,7 @@ function deleteTool (req, res) {
     if (tool.author.equals(req.user.profile._id)) {
       tool.deleteOne()
       .then (() => {
-        Profile.findById(req.user.profile._id)
-        .then (profile => {
-          profile.createdTools.remove(tool._id)
-          profile.save()
-          .then (() => {
-            res.redirect('/tools')
-          })
-          .catch (err => {
-            console.log(err)
-            res.redirect(`/tools/${tool._id}`)
-          })
-        })
-        .catch (err => {
-          console.log(err)
-          res.redirect(`/tools/${tool._id}`)
-        })
+        res.redirect('/tools')
       })
       .catch (err => {
         console.log(err)
@@ -266,72 +236,62 @@ function newReview (req, res) {
   })
 }
 
-function createReview (req, res) {
-  req.body.author = req.user.profile._id
-  req.body.tool = req.params.toolId
+function createReview(req, res) {
+  req.body.author = req.user.profile._id;
+  req.body.tool = req.params.toolId;
   Tool.findById(req.params.toolId)
-  .then (tool => {
+  .then(tool => {
     if (req.body.content === '') {
       res.render('reviews/new', {
         title: 'Add Review',
         tool,
         blankError: true,
-      })
+      });
     } else {
       Review.create(req.body)
-      .then (review => {
-        tool.reviews.push(review._id)
+      .then(review => {
+        tool.reviews.push(review._id);
         tool.save()
-        .then (tool => {
-          Profile.findById(req.user.profile._id)
-          .then (profile => {
-            profile.reviews.push(review._id)
-            profile.save()
-            .then (() => {
-              Review.find({tool: tool._id})
-              .then (reviews => {
-                let sum = 0
+          .then(() => {
+            Review.find({ tool: tool._id })
+              .then(reviews => {
+                let sum = 0;
                 reviews.forEach(review => {
-                  sum += review.rating
-                })
-                let avg = sum / reviews.length
-                tool.averageRating = Math.floor(avg)
+                  sum += review.rating;
+                });
+                let avg = sum / reviews.length;
+                tool.averageRating = Math.floor(avg);
                 tool.save()
-                .then (() => {
-                  res.redirect(`/tools/${tool._id}/reviews`)
-                })
-                .catch (err => {
-                  console.log(err)
-                  res.redirect(`/tools/${tool._id}/reviews/new`)
-                })
+                  .then(() => {
+                    res.redirect(`/tools/${tool._id}/reviews`);
+                  })
+                  .catch(err => {
+                    console.error(err);
+                    res.redirect(`/tools/${tool._id}/reviews/new`);
+                  });
               })
-            })
-            .catch (err => {
-              console.log(err)
-              res.redirect(`/tools/${tool._id}/reviews/new`)
-            })
+              .catch(err => {
+                console.error(err);
+                res.redirect(`/tools/${tool._id}/reviews/new`);
+              });
           })
-          .catch (err => {
-            console.log(err)
-            res.redirect(`/tools/${tool._id}/reviews/new`)
-          })
-        })
-        .catch (err => {
-          console.log(err)
-          res.redirect(`/tools/${tool._id}/reviews/new`)
-        })
+          .catch(err => {
+            console.error(err);
+            res.redirect(`/tools/${tool._id}/reviews/new`);
+          });
       })
-      .catch (err => {
-        console.log(err)
-        res.redirect(`/tools/${tool._id}/reviews/new`)
-      })
+      .catch(err => {
+        console.error(err);
+        res.redirect(`/tools/${tool._id}/reviews/new`);
+      });
     }
   })
-  .catch (err => {
-    console.log(err)
-    res.redirect(`/tools/${tool._id}/reviews/new`)
-  })
+  .catch(err => {
+    console.error(err);
+    res.redirect(`/tools/${req.params.toolId}`);
+  });
 }
+
 
 function editReview (req, res) {
   Tool.findById(req.params.toolId)
@@ -391,6 +351,10 @@ function updateReview (req, res) {
               res.redirect(`/tools/${tool._id}/reviews`)
             })
           })
+          .catch (err => {
+            console.log(err)
+            res.redirect(`/tools/${tool._id}/reviews`)
+          })
         })
         .catch (err => {
           console.log(err)
@@ -409,69 +373,63 @@ function updateReview (req, res) {
   })
 }
 
-function deleteReview (req, res) {
+function deleteReview(req, res) {
   Review.findById(req.params.reviewId)
-  .then (review => {
+  .then(review => {
     if (review.author.equals(req.user.profile._id)) {
       review.deleteOne()
-      .then (() => {
-        Profile.findById(req.user.profile._id)
-        .then (profile => {
-          profile.reviews.remove(req.params.reviewId)
-          profile.save()
-          .then (() => {
-            Tool.findById(req.params.toolId)
-            .then (tool => {
-              tool.reviews.remove(req.params.reviewId)
-              tool.save()
-              .then (() => {
-                Review.find({tool: tool._id})
-                .then (reviews => {
-                  let sum = 0
+        .then(() => {
+          Tool.findById(req.params.toolId)
+          .then(tool => {
+            tool.reviews.remove(req.params.reviewId);
+            tool.save()
+              .then(() => {
+                Review.find({ tool: tool._id })
+                .then(reviews => {
+                  let sum = 0;
                   reviews.forEach(review => {
-                    sum += review.rating
-                  })
-                  let avg = sum / reviews.length
-                  tool.averageRating = Math.floor(avg)
+                    sum += review.rating;
+                  });
+                  let avg = sum / reviews.length;
+                  tool.averageRating = Math.floor(avg);
                   tool.save()
-                  .then (() => {
-                    res.redirect(`/tools/${tool._id}/reviews`)
-                  })
-                  .catch (err => {
-                    console.log(err)
-                    res.redirect(`/tools/${tool._id}/reviews`)
-                  })
+                    .then(() => {
+                      res.redirect(`/tools/${tool._id}/reviews`);
+                    })
+                    .catch(err => {
+                      console.error(err);
+                      res.redirect(`/tools/${tool._id}/reviews`);
+                    });
                 })
+                .catch(err => {
+                  console.error(err);
+                  res.redirect(`/tools/${tool._id}/reviews`);
+                });
               })
-              .catch (err => {
-                console.log(err)
-                res.redirect(`/tools/${tool._id}/reviews`)
-              })
-            })
-            .catch (err => {
-              console.log(err)
-              res.redirect(`/tools/${tool._id}/reviews`)
-            })
+              .catch(err => {
+                console.error(err);
+                res.redirect(`/tools/${tool._id}/reviews`);
+              });
           })
-          .catch (err => {
-            console.log(err)
-            res.redirect(`/tools/${tool._id}/reviews`)
-          })
+          .catch(err => {
+            console.error(err);
+            res.redirect(`/tools/${req.params.toolId}`);
+          });
         })
-        .catch (err => {
-          console.log(err)
-          res.redirect(`/tools/${tool._id}/reviews`)
-        })
-      })
-      .catch (err => {
-        console.log(err)
-        res.redirect(`/tools/${tool._id}/reviews`)
-      })
+        .catch(err => {
+          console.error(err);
+          res.redirect(`/tools/${req.params.toolId}`);
+        });
     } else {
-      res.redirect(`/tools/${tool._id}/reviews`)
+      res.redirect(`/tools/${req.params.toolId}`);
     }
   })
+  .catch(err => {
+    console.error(err);
+    res.redirect(`/tools/${req.params.toolId}`);
+  });
 }
+
 
 export {
   index,

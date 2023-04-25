@@ -33,22 +33,7 @@ function create (req, res) {
           req.body.author = req.user.profile._id
           ToolType.create(req.body)
           .then (toolType => {
-            Profile.findById(req.user.profile._id)
-            .then (profile => {
-              profile.createdToolTypes.push(toolType._id)
-              profile.save()
-              .then (() => {
-                res.redirect('/toolTypes')
-              })
-              .catch(err => {
-                console.log(err)
-                res.redirect('/toolTypes/new')
-              })
-            })
-            .catch(err => {
-              console.log(err)
-              res.redirect('/toolTypes/new')
-            })
+            res.redirect('/toolTypes')
           })
           .catch (err => {
             console.log(err)
@@ -56,6 +41,10 @@ function create (req, res) {
           })
         } 
       }
+    })
+    .catch (err => {
+      console.log(err)
+      res.redirect('/toolTypes/new')
     })
   }
 }
@@ -153,36 +142,35 @@ function update (req, res) {
   })
 }
 
-function deleteToolType (req, res) {
+function deleteToolType(req, res) {
   ToolType.findById(req.params.toolTypeId)
-  .then (toolType => {
-    if(toolType.author.equals(req.user.profile._id)) {
-      Profile.findById(req.user.profile._id)
-      .then (profile => {
-        profile.createdToolTypes.remove(toolType._id)
-        profile.save()
-        .then (() => {
-          toolType.deleteOne()
-          .then (() => {
-            res.redirect('/toolTypes')
-          })
-          .catch (err => {
-            console.log(err)
-            res.redirect(`/toolTypes/${toolType._id}`)
-          })
+  .then(toolType => {
+    if (toolType.author.equals(req.user.profile._id)) {
+      Tool.deleteMany({ toolType: toolType._id })
+      .then(() => {
+        toolType.deleteOne()
+        .then(() => {
+          res.redirect('/toolTypes');
         })
-        .catch (err => {
-        console.log(err)
-        res.redirect(`/toolTypes/${toolType._id}`)
-        })
+        .catch(err => {
+          console.error(err);
+          res.redirect(`/toolTypes/${toolType._id}`);
+        });
       })
-      .catch (err => {
-        console.log(err)
-        res.redirect(`/toolTypes/${toolType._id}`)
-      })
+      .catch(err => {
+        console.error(err);
+        res.redirect(`/toolTypes/${toolType._id}`);
+      });
+    } else {
+      res.redirect(`/toolTypes/${toolType._id}`);
     }
   })
+  .catch(err => {
+    console.error(err);
+    res.redirect('/toolTypes');
+  });
 }
+
   
 export {
   newToolType as new,

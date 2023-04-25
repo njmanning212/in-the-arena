@@ -1,5 +1,6 @@
 import { ToolType } from "../models/toolType.js";
 import { Profile } from "../models/profile.js";
+import { Tool } from "../models/tool.js";
 
 function newToolType (req, res) {
   res.render('toolTypes/new', {
@@ -155,24 +156,12 @@ function update (req, res) {
 function deleteToolType (req, res) {
   ToolType.findById(req.params.toolTypeId)
   .then (toolType => {
-    if(toolType.author.equals(req.user.profile._id)) {
-      Profile.findById(req.user.profile._id)
-      .then (profile => {
-        profile.createdToolTypes.remove(toolType._id)
-        profile.save()
+    if (toolType.author.equals(req.user.profile._id)) {
+      Tool.deleteMany({type: toolType._id})
+      .then (() => {
+        toolType.deleteOne()
         .then (() => {
-          toolType.deleteOne()
-          .then (() => {
-            res.redirect('/toolTypes')
-          })
-          .catch (err => {
-            console.log(err)
-            res.redirect(`/toolTypes/${toolType._id}`)
-          })
-        })
-        .catch (err => {
-        console.log(err)
-        res.redirect(`/toolTypes/${toolType._id}`)
+          res.redirect('/toolTypes')
         })
       })
       .catch (err => {
@@ -182,7 +171,7 @@ function deleteToolType (req, res) {
     }
   })
 }
-
+  
 export {
   newToolType as new,
   create,

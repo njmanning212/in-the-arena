@@ -29,7 +29,7 @@
       </a>
   </div>
   <div>
-    <form action="/profiles/<%= user.profile._id %>/favoriteTools/<%= tool._id %>"
+    <form action="/profiles/<%= user?.profile._id %>/favoriteTools/<%= tool._id %>"
     method="POST">
     <button type="submit">Add to Favorites</button>
     </form>

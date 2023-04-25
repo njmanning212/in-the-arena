@@ -4,22 +4,18 @@
 </head>
 <body>
   <nav>
-    <!-- <i class="fas fa-plane fa-2x"></i> -->
-    <a 
-      href="/profiles" class=<%= title === 'Profiles' ? 'active' : '' %>
-    >
-      PROFILES
-    </a>
-    <a 
-      href="/toolTypes" class=<%= title === 'Tool Types' ? 'active' : '' %>
-    >
-      TOOL TYPES
-    </a>
-    <a 
-      href="/tools" class=<%= title === 'Tools' ? 'active' : '' %>
-    >
-      TOOLS
-    </a>
+    <div>
+      <% if (user) { %>
+        <a href="/profiles/<%= user.profile._id %>">Home</a>
+      <% } else { %>
+        <a href="/">Home</a>
+      <% } %>
+    </div>
+    <div>
+      <a href="/profiles" class=<%= title === 'Profiles' ? 'active' : '' %>>PROFILES</a>
+      <a href="/toolTypes" class=<%= title === 'Tool Types' ? 'active' : '' %>>TOOL TYPES</a>
+      <a href="/tools" class=<%= title === 'Tools' ? 'active' : '' %>>TOOLS</a>
+    </div>
     <% if (user) { %>
       <a href="/auth/logout" class="right">
         <button type="submit">Logout</button>
@@ -36,10 +32,11 @@
         class="g_id_signin right"
         data-type="standard"
         data-size="large"
-        data-theme="outline"
+        data-theme="filled_black"
         data-text="sign_in_with"
         data-shape="rectangular"
         data-logo_alignment="left"
       ></div>
     <% } %>
   </nav>
+  

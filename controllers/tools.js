@@ -230,7 +230,6 @@ function deleteTool(req, res) {
   })
 }
 
-
 function reviewsIndex(req, res) {
   Tool.findById(req.params.toolId)
   .populate('reviews')
@@ -252,7 +251,6 @@ function reviewsIndex(req, res) {
     res.redirect('/tools')
   })
 }
-
 
 function newReview (req, res) {
   Tool.findById(req.params.toolId)
@@ -324,7 +322,6 @@ function createReview(req, res) {
     res.redirect(`/tools/${req.params.toolId}`);
   });
 }
-
 
 function editReview (req, res) {
   Tool.findById(req.params.toolId)

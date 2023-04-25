@@ -2,31 +2,18 @@ html {
   box-sizing: border-box;
 }
 
-/* The Universal Selector */
-*, /* All elements*/
-*::before, /* All ::before pseudo-elements */
+*::before,
 *::after {
-  /* All ::after pseudo-elements */
-  /* height & width will now include border & padding by default but can be overridden as needed */
   box-sizing: inherit;
 }
 
 body {
-  background-color: #1a1a1a;
+  background-color: rgba(3, 33, 25, 1);
   color: #f6f6f6;
   /* Use a system font, if none are available use any found sans-sarif font */
   font-family: system-ui, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 
     'Helvetica Neue', sans-serif;
   margin: 0;
-}
-
-nav {
-  background-color: #f6f6f6;
-  color: #1a1a1a;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  min-height: 60px;
 }
 
 main {
@@ -39,3 +26,30 @@ main {
 .right {
   margin-left: auto;
 }
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(207, 216, 219, 1);
+  height: 60px;
+  padding: 0 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  nav a, nav div {
+  margin: 0 10px;
+  font-size: 16px;
+  color: #032119;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  }
+  
+  nav i {
+  margin-right: 10px;
+  }
+  
+  nav .active {
+  color: rgb(16, 168, 127);
+  }

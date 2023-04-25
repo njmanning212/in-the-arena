@@ -17,7 +17,9 @@
     difficulty level: <%= tool.difficulty %>
   </div>
   <div>
-    tool type: <%= tool.type.name %>
+    <% if (tool.type) { %>
+      <p> tool type: <%= tool.type.name %> </p>
+    <% } %>
   </div>
   <div>
     <h2>Instructions</h2>

@@ -46,7 +46,9 @@
       <div>
           <label for="toolTypeId">Tool Type</label>
           <select name="type" id="toolTypeId">
-            <option value="<%= tool.type._id %>"><%= tool.type.name %></option>
+            <% if (tool.type) { %>
+              <option value="<%= tool.type._id %>"><%= tool.type.name %></option>
+            <% } %>
             <% toolTypes.forEach(toolType => { %>
               <option value="<%= toolType._id %>"><%= toolType.name %></option>
             <% }) %>

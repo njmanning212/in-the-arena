@@ -10,7 +10,7 @@ const toolSchema = new Schema({
   imgOwnerLink: String,
   difficulty: { type: Number, min: 1, max: 5},
   author: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  type: { type: Schema.Types.ObjectId, ref: 'ToolType' },
+  type: { type: Schema.Types.ObjectId, ref: 'ToolType', default: null},
   reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
   averageRating: Number,
 }, {

@@ -184,7 +184,14 @@ function deleteTool (req, res) {
     if (tool.author.equals(req.user.profile._id)) {
       tool.deleteOne()
       .then (() => {
-        res.redirect('/tools')
+        Review.deleteMany({tool: req.params.toolId})
+        .then(() => {
+          res.redirect('/tools')
+        })
+        .catch (err => {
+          console.log(err)
+          res.redirect('/tools')
+        })
       })
       .catch (err => {
         console.log(err)

@@ -190,17 +190,21 @@ function deleteTool(req, res) {
         .then(() => {
           Profile.find({ favoriteTools: req.params.toolId })
           .then(profiles => {
-            profiles.forEach(profile => {
-              profile.favoriteTools.remove(req.params.toolId)
-              profile.save()
-              .then(() => {
-                res.redirect('/tools')
+            if (profiles.length > 0) {
+              profiles.forEach(profile => {
+                profile.favoriteTools.remove(req.params.toolId)
+                profile.save()
+                .then(() => {
+                  res.redirect('/tools')
+                })
+                .catch(err => {
+                  console.log(err)
+                  res.redirect('/tools')
+                })
               })
-              .catch(err => {
-                console.log(err)
-                res.redirect('/tools')
-              })
-            })
+            } else {
+              res.redirect('/tools')
+            }
           })
           .catch(err => {
             console.log(err)
@@ -225,6 +229,7 @@ function deleteTool(req, res) {
     res.redirect('/tools')
   })
 }
+
 
 function reviewsIndex(req, res) {
   Tool.findById(req.params.toolId)

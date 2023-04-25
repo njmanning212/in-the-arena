@@ -132,6 +132,8 @@ function update (req, res) {
             console.log(err)
             res.redirect(`/toolTypes/${toolType._id}/edit`)
           })
+        } else {
+          throw new Error('Not Authorized')
         }
       })
       .catch (err => {
@@ -154,20 +156,20 @@ function deleteToolType(req, res) {
         })
         .catch(err => {
           console.error(err);
-          res.redirect(`/toolTypes/${toolType._id}`);
+          res.redirect(`/toolTypes/${toolType._id}`)
         });
       })
       .catch(err => {
         console.error(err);
-        res.redirect(`/toolTypes/${toolType._id}`);
+        res.redirect(`/toolTypes/${toolType._id}`)
       });
     } else {
-      res.redirect(`/toolTypes/${toolType._id}`);
+      throw new Error('Not Authorized')
     }
   })
   .catch(err => {
     console.error(err);
-    res.redirect('/toolTypes');
+    res.redirect('/toolTypes')
   });
 }
 

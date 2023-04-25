@@ -165,7 +165,7 @@ function removeFavoriteTool (req, res) {
         res.redirect('/')
       })
     } else {
-      res.redirect(`/profiles/${profile._id}`)
+      throw new Error('Not Authorized')
     }
   })
   .catch(err => {

@@ -163,6 +163,8 @@ function update (req, res) {
               console.log(err)
               res.redirect(`/tools/${tool._id}`)
             })
+          } else {
+            throw new Error('Not Authorized')
           }
         })
         .catch (err => {
@@ -214,6 +216,8 @@ function deleteTool(req, res) {
         console.log(err)
         res.redirect(`/tools/${tool._id}`)
       })
+    } else {
+      throw new Error('Not authorized')
     }
   })
   .catch(err => {
@@ -330,6 +334,8 @@ function editReview (req, res) {
           tool,
           blankError: false,
         })
+      } else {
+        throw new Error('Not Authorized')
       }
     })
     .catch (err => {
@@ -384,6 +390,8 @@ function updateReview (req, res) {
           console.log(err)
           res.redirect(`/tools/${tool._id}/reviews`)
         })
+      } else {
+        throw new Error('Not Authorized')
       }
     })
     .catch (err => {
@@ -405,7 +413,7 @@ function deleteReview(req, res) {
         .then(() => {
           Tool.findById(req.params.toolId)
           .then(tool => {
-            tool.reviews.remove(req.params.reviewId);
+            tool.reviews.remove(req.params.reviewId)
             tool.save()
               .then(() => {
                 Review.find({ tool: tool._id })
@@ -415,42 +423,42 @@ function deleteReview(req, res) {
                     sum += review.rating;
                   });
                   let avg = sum / reviews.length;
-                  tool.averageRating = Math.floor(avg);
+                  tool.averageRating = Math.floor(avg)
                   tool.save()
                     .then(() => {
-                      res.redirect(`/tools/${tool._id}/reviews`);
+                      res.redirect(`/tools/${tool._id}/reviews`)
                     })
                     .catch(err => {
                       console.error(err);
-                      res.redirect(`/tools/${tool._id}/reviews`);
+                      res.redirect(`/tools/${tool._id}/reviews`)
                     });
                 })
                 .catch(err => {
                   console.error(err);
-                  res.redirect(`/tools/${tool._id}/reviews`);
+                  res.redirect(`/tools/${tool._id}/reviews`)
                 });
               })
               .catch(err => {
                 console.error(err);
-                res.redirect(`/tools/${tool._id}/reviews`);
+                res.redirect(`/tools/${tool._id}/reviews`)
               });
           })
           .catch(err => {
             console.error(err);
-            res.redirect(`/tools/${req.params.toolId}`);
+            res.redirect(`/tools/${req.params.toolId}`)
           });
         })
         .catch(err => {
           console.error(err);
-          res.redirect(`/tools/${req.params.toolId}`);
+          res.redirect(`/tools/${req.params.toolId}`)
         });
     } else {
-      res.redirect(`/tools/${req.params.toolId}`);
+      throw new Error('Not Authorized');
     }
   })
   .catch(err => {
     console.error(err);
-    res.redirect(`/tools/${req.params.toolId}`);
+    res.redirect(`/tools/${req.params.toolId}`)
   });
 }
 

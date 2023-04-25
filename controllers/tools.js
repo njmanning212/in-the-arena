@@ -178,28 +178,45 @@ function update (req, res) {
   })
 }
 
-function deleteTool (req, res) {
+function deleteTool(req, res) {
   Tool.findById(req.params.toolId)
-  .then (tool => {
+  .then(tool => {
     if (tool.author.equals(req.user.profile._id)) {
       tool.deleteOne()
-      .then (() => {
-        Review.deleteMany({tool: req.params.toolId})
+      .then(() => {
+        Review.deleteMany({ tool: req.params.toolId })
         .then(() => {
-          res.redirect('/tools')
+          Profile.find({ favoriteTools: req.params.toolId })
+          .then(profiles => {
+            profiles.forEach(profile => {
+              profile.favoriteTools.remove(req.params.toolId)
+              profile.save()
+              .then(() => {
+                res.redirect('/tools')
+              })
+              .catch(err => {
+                console.log(err)
+                res.redirect('/tools')
+              })
+            })
+          })
+          .catch(err => {
+            console.log(err)
+            res.redirect('/tools')
+          })
         })
-        .catch (err => {
+        .catch(err => {
           console.log(err)
           res.redirect('/tools')
         })
       })
-      .catch (err => {
+      .catch(err => {
         console.log(err)
         res.redirect(`/tools/${tool._id}`)
       })
     }
   })
-  .catch (err => {
+  .catch(err => {
     console.log(err)
     res.redirect('/tools')
   })

@@ -1,18 +1,28 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/profiles/toolReviews.css" />
 <%- include('../partials/nav') %>
 
 <main>
-  <h1><%= title %></h1>
+  <div class="header">
+    <h1><a href="/profiles/<%= profile._id %>"> <%= profile.name %>'s</a>
+    <br>
+    Reviews
+    </h1>
+  </div>
   <section>
     <% reviews.forEach(review => { %>
-      <div>
-        <h2>Review for: <%= review.tool.name %></h2>
+      <div class="reviewer">
+        <h2>Review For: 
+          <br>
+          <a href="/tools/<%= review.tool._id %>"><%= review.tool.name %></a>
+        </h2>
         <p> <%= review.content %> %></p>
-        <p>Rating: <%= review.rating %></p>
+        <p>
+          <% for (let i = 0; i < review.rating; i++) { %>
+            <span>⭐</span>
+          <% } %>
+        </p>
         <p><%= review.createdAt.toLocaleDateString() %></p>
-        <a href="/tools/<%= review.tool._id %>">
-          <button> Tool Details</button>
-        </a>
         <% if (review.author.equals(user.profile._id)) { %>
           <a href="/tools/<%= review.tool._id %>/reviews/<%= review._id %>/edit">
             <button>Edit Review</button>

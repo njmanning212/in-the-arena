@@ -1,4 +1,6 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/toolTypes/index.css" />
+
 <%- include('../partials/nav') %>
 
 <main>
@@ -8,20 +10,17 @@
       <button type="button">Add Tool Type</button>
     </a>
   <% } %>
-  <ul>
-    <% toolTypes.forEach(toolType => { %>
-      <li>
-        <div>
-          <a href="/toolTypes/<%= toolType.id %>">
-            <%= toolType.name %>
-          </a>
-        </div>
-        <div>
-          <%= toolType.description %>
-        </div>
-      </li>
-    <% }) %>
-  </ul>
+
+  <% toolTypes.forEach(toolType => { %>
+    <div class="toolType">
+      <h2><%= toolType.name %></h2>
+      <a href="/toolTypes/<%= toolType._id %>">
+        <button> Tool Type Details</button>
+      </a>
+
+    </div>
+  <% }) %>
+
 </main>
 
 <%- include('../partials/footer') %>

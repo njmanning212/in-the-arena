@@ -51,6 +51,7 @@ function create (req, res) {
 
 function index (req, res) {
   ToolType.find({})
+  .populate('author')
   .then (toolTypes => {
     res.render('toolTypes/index', {
       title: 'Tool Types',

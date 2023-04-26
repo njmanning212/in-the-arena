@@ -1,0 +1,25 @@
+img {
+  border-radius: 50%;
+}
+
+.reviewer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  text-align: center;
+}
+
+.reviewer p {
+  max-width: 350px;
+}
+
+
+a {
+  color: var(--button-color);
+}
+
+.header {
+  text-align: center;
+}

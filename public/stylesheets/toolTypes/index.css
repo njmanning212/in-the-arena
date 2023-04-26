@@ -1,0 +1,24 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.toolType {
+  margin: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin: 20px;
+}
+
+a {
+  color: var(--button-color);
+}
+
+.header {
+  text-align: center;
+}
+

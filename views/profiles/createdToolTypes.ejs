@@ -1,20 +1,28 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/profiles/createdToolTypes.css" />
 <%- include('../partials/nav') %>
 
 <main>
-  <h1><%= title %></h1>
+  <div class="header">
+    <h1> <a href="/profiles/<%= profile._id %>"> <%= profile.name %>'s</a> 
+    <br>
+    Created Tool Types</h1>
+  </div>
   <section>
     <% toolTypes.forEach(toolType => { %>
-      <div>
-        <h2>Name: <%= toolType.name %></h2>
-        <p> Tool Type: <%= toolType.description %></p>
-        <a href="/toolTypes/<%= toolType._id %>">
-          <button> Tool Type Details</button>
-        </a>
-        <% if (toolType.author.equals(user.profile._id)) { %>
-          <a href="/toolTypes/<%= toolType._id %>/edit">
-            <button>Edit Tool Type</button>
+      <div class="toolType">
+        <h2><%= toolType.name %></h2>
+        <p>
+          <a href="/toolTypes/<%= toolType._id %>">
+            <button> Tool Type Details</button>
           </a>
+        </p>
+        <% if (toolType.author.equals(user.profile._id)) { %>
+          <p>
+            <a href="/toolTypes/<%= toolType._id %>/edit">
+              <button>Edit Tool Type</button>
+            </a>
+          </p>
         <% } %>
       </div>
     <% }) %>

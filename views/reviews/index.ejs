@@ -13,19 +13,18 @@
   </div>
   <% if (tool.reviews.length > 0) { %>
     <div class="average-rating">
-      <p>Average Rating: <%= tool.averageRating %>
+      <p><%= tool.averageRating %>.0
         <% for (let i = 0; i < tool.averageRating; i++) { %>
           <span>⭐</span>
         <% } %>
+        <%= tool.reviews.length  %> 
+        <% if (tool.reviews.length === 1) { %>
+          Review
+        <% } else { %>
+          Reviews
+        <% } %>
       </p>
     </div>
-    <p><%= tool.reviews.length  %> 
-      <% if (tool.reviews.length === 1) { %>
-        Review
-      <% } else { %>
-        Reviews
-      <% } %>
-    </p>
   <% } %>
   <% let userReview = tool.reviews.find(review => review.author.equals(user?.profile._id)) %>
   <% if (userReview) { %>

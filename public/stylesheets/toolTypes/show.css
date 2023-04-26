@@ -3,22 +3,20 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .toolType {
   margin: 20px;
   text-align: center;
-  background-color: var(--form-background-color);
-  color: black;
-  width: 20%;
-  height: 150px;
-  border-radius: 8px;
 }
 
 h1 {
   margin: 20px;
-  color: var(--text-on-background-color);
-  
+}
+
+p {
+  max-width: 350px;
 }
 
 a {
@@ -28,4 +26,3 @@ a {
 .header {
   text-align: center;
 }
-

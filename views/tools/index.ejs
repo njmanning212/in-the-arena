@@ -1,4 +1,5 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/tools/index.css" />
 <%- include('../partials/nav') %>
 
 <main>
@@ -11,20 +12,45 @@
 
   <section>
     <% tools.forEach(tool => { %>
-      <div class="tooltype">
-        <h2>Name: <%= tool.name %></h2>
-        <p>Created by: <%= tool.author.name %></p>
-        <% if (tool.type) { %>
-          <p> Tool Type: <%= tool.type.name %></p>
-        <% } %>
-        <img src="<%= tool.imgSrc %>" alt="tool image">
-        <p>Image from <a href="<%= tool.imgOwnerLink %>"><%= tool.imgOwner %></a></p>
-        <% if (tool.averageRating) { %>
-          <p> Average Rating: <%= tool.averageRating %></p>
-        <% } %>
-        <a href="/tools/<%= tool._id %>">
-          <button> Tool Details</button>
-        </a>
+      <div class="tool">
+        <div class="img">
+          <img src="<%= tool.imgSrc %>" alt="tool image">
+        </div>
+        <div class="info">
+          <div>
+            <h2><%= tool.name %></h2>
+          </div>
+          <div>
+            <% if (tool.type) { %>
+              <p> Tool Type: <a href="/toolTypes/<%= tool.type._id %>"><%= tool.type.name %></a></p>
+            <% } %>
+          </div>
+          <div>
+            <% if (tool.reviews.length > 0) { %>
+              <div class="average-rating">
+                <p><%= tool.averageRating %>.0
+                  <% for (let i = 0; i < tool.averageRating; i++) { %>
+                    <span>⭐</span>
+                  <% } %>
+                  <% if (tool.reviews.length === 1) { %>
+                    <a href="/tools/<%= tool._id %>/reviews">
+                      <%= tool.reviews.length  %> Review
+                    </a>
+                  <% } else { %>
+                    <a href="/tools/<%= tool._id %>/reviews">
+                      <%= tool.reviews.length  %> Reviews
+                    </a>            
+                  <% } %>
+                </p>
+              </div>
+            <% } %>
+          </div>
+          <div>
+            <a href="/tools/<%= tool._id %>">
+              <button> Tool Details</button>
+            </a>
+          </div>
+        </div>
       </div>
     <% }) %>
   </section>

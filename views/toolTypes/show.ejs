@@ -1,13 +1,22 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/toolTypes/show.css" />
 <%- include('../partials/nav') %>
 
 <main>
   <h1> <%= toolType.name %></h1>
   <div>
-    created by <%= toolType.author.name %>
+    <h2>
+      Created By 
+      <br>
+      <a href="/profiles/<%= toolType.author._id %>"><%= toolType.author.name %></a>
+      <br>
+      <%= toolType.createdAt.toLocaleDateString() %>
+    </h2>
   </div>
   <div>
-    <%= toolType.description %>
+    <p>
+      <%= toolType.description %>
+    </p>
   </div>
   <div>
     <% if (toolType.author.equals(user?.profile._id)) { %>

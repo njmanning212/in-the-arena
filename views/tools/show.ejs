@@ -1,48 +1,76 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/tools/show.css">
 <%- include('../partials/nav') %>
 
 <main>
-  <div>
-    <img src="<%= tool.imgSrc %>" alt="tool image">
-  </div>
-  <div>
-    <p>Image From <a href="<%= tool.imgOwnerLink %>"><%= tool.imgOwner %></a>
-    </p>
-  </div>
-  <h1> <%= tool.name %></h1>
-  <div>
-    created by <%= tool.author.name %>
-  </div>
-  <div>
-    difficulty level: <%= tool.difficulty %>
-  </div>
-  <div>
-    <% if (tool.type) { %>
-      <p> tool type: <%= tool.type.name %> </p>
-    <% } %>
-  </div>
-  <div>
-    <h2>Instructions</h2>
-    <%= tool.instructions %>
-  </div>
-  <div>
-      <a href="/tools/<%= tool._id %>/reviews">
-        <button type="button">See Reviews</button>
-      </a>
-  </div>
-  <div>
-    <form action="/profiles/<%= user?.profile._id %>/favoriteTools/<%= tool._id %>"
-    method="POST">
-    <button type="submit">Add to Favorites</button>
-    </form>
-  </div>
-  <div>
-    <% if (tool.author.equals(user?.profile._id)) { %>
-      <a href="/tools/<%= tool._id %>/edit">
-        <button type="button">Edit Tool</button>
-      </a>
-    <% } %>
-  </div>
+  <section>
+    <div class="img">
+      <img src="<%= tool.imgSrc %>" alt="tool image">
+    </div>
+    <div class="info">
+      <div>
+        <p>Image From <a href="<%= tool.imgOwnerLink %>"><%= tool.imgOwner %></a>
+        </p>
+      </div>
+      <h1> <%= tool.name %></h1>
+      <div>
+        <% if (tool.author.equals(user?.profile._id)) { %>
+          <a href="/tools/<%= tool._id %>/edit">
+            <button type="button">Edit Tool</button>
+          </a>
+        <% } else { %>
+          <p>
+            Created By <a href="/profiles/<%= tool.author._id %>"><%= tool.author.name %></a>
+          </p>
+        <% } %>
+        <p><%= tool.createdAt.toLocaleDateString() %></p>
+        <p>
+          Difficulty Level: <%= tool.difficulty %>
+        </p>
+        <p>
+          <% if (tool.type) { %>
+            Tool Type: <a href="/toolTypes/<%= tool.type._id %>"><%= tool.type.name %></a>
+          <% } %>
+        </p>
+      </div>
+      <div id="instructions">
+        <div>
+          <h2>Instructions</h2>
+        </div>
+        <div>
+          <p>
+        </div>
+          <%= tool.instructions %>
+        </p>
+      </div>
+      <% if (tool.reviews.length > 0) { %>
+        <div class="average-rating">
+          <p><%= tool.averageRating %>.0
+            <% for (let i = 0; i < tool.averageRating; i++) { %>
+              <span>⭐</span>
+            <% } %>
+            <% if (tool.reviews.length === 1) { %>
+              <a href="/tools/<%= tool._id %>/reviews">
+                <%= tool.reviews.length  %> Review
+              </a>
+            <% } else { %>
+              <a href="/tools/<%= tool._id %>/reviews">
+                <%= tool.reviews.length  %> Reviews
+              </a>            
+            <% } %>
+          </p>
+        </div>
+      <% } %>
+      <% if (user) { %>
+        <div>
+          <form action="/profiles/<%= user?.profile._id %>/favoriteTools/<%= tool._id %>"
+          method="POST">
+          <button type="submit">Add to Favorites</button>
+          </form>
+        </div>
+      <% } %>
+    </div>
+  </section>
 </main>
 
 <%- include('../partials/footer') %>

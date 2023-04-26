@@ -18,8 +18,9 @@ function index (req, res) {
   })
 }
 
-function show(req, res) {
+function show (req, res) {
   Profile.findById(req.params.profileId)
+  .populate('favoriteTools')
   .then(profile => {
     Tool.find({ author: profile._id })
       .populate('type')

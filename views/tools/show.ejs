@@ -42,11 +42,6 @@
         <button type="button">Edit Tool</button>
       </a>
     <% } %>
-    <% if (tool.author.equals(user?.profile._id)) { %>
-      <form action="/tools/<%= tool._id %>?_method=DELETE" method="POST">
-        <button type="submit">Delete Tool</button>
-      </form>
-    <% } %>
   </div>
 </main>
 

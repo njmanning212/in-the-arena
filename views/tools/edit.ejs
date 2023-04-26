@@ -1,20 +1,19 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets//tools/form.css" />
 <%- include('../partials/nav') %>
 
 <main>
-
+  <h1><%= title %></h1>
   <section>
-    <h1><%= title %></h1>
     <form action="/tools/<%= tool._id %>?_method=PUT" method="POST">
       <div>
-        <div>
           <label for="name">Name</label>
           <input type="text" name="name" id="name" value="<%= tool.name %>" autocomplete="off"/>
       </div>
       <div>
           <label for="instructions">Instructions</label>
           <textarea type="text" name="instructions" id="instructions" maxlength="1500"><%= tool.instructions %></textarea>
-          1500 char max
+          <p>1500 char max</p>
       </div>
       <div>
           <label for="imgSrc"> Link To Image</label>
@@ -27,7 +26,8 @@
       <div>
           <label for="imgOwnerLink"> Link to Owner of Image</label>
           <input type="text" name="imgOwnerLink" id="imgOwnerLink" value="<%= tool.imgOwnerLink %>">
-      <div>
+      <div id="selectors">
+        <div>
           <label for="difficulty">Difficulty to Perform (0-10)</label>
           <select name="difficulty" id="difficulty">
             <option value="<%= tool.difficulty %>"><%= tool.difficulty %></option>
@@ -42,8 +42,8 @@
             <option value="9">9</option>
             <option value="10">10</option>
           </select>
-      </div>
-      <div>
+        </div>
+        <div>
           <label for="toolTypeId">Tool Type</label>
           <select name="type" id="toolTypeId">
             <% if (tool.type) { %>
@@ -53,28 +53,35 @@
               <option value="<%= toolType._id %>"><%= toolType.name %></option>
             <% }) %>
           </select>
+        </div>
       </div>
-      <div>
+      <div id="button">
         <% if (tool.author.equals(user?.profile._id)) { %>
           <button type="submit">Update Tool</button>
         <% } %>
+        <% if (tool.author.equals(user?.profile._id)) { %>
+          <form action="/tools/<%= tool._id %>?_method=DELETE" method="POST">
+            <button id="delete-button" type="submit">Delete Tool</button>
+          </form>
+        <% } %>
       </div>
     </form>
+    <% if (blankError) { %>
+      <div class="error">
+        <h2>Please don't leave any fields blank</h2>
+      </div>
+    <% } %>
+    <% if (duplicateError) { %>
+      <div class="error">
+        <h2>That tool already exists</h2>
+      </div>
+    <% } else if (!duplicateError && !blankError) { %>
+      <div class="error">
+        <h2> Double check your updates </h2>
+      </div>
+    <% } %>
   </section>
 
-</main>
-
-
-<% if (blankError) { %>
-  <div>
-    <h2>Please don't leave any fields blank</h2>
-  </div>
-<% } %>
-<% if (duplicateError) { %>
-  <div>
-    <h2>That tool type already exists</h2>
-  </div>
-<% } %>
 </main>
 
 <%- include('../partials/footer') %>

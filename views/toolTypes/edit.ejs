@@ -1,45 +1,48 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets//toolTypes/forms.css" />
 <%- include('../partials/nav') %>
 
 <main>
-  <h1> Edit <%= toolType.name %></h1>
-  <form action="/toolTypes/<%= toolType._id %>?_method=PUT" method="POST">
-    <div>
+  <div id="header">
+    <h1> 
+      <%= title %> 
+      <br>
+      <a href="/toolTypes/<%= toolType._id %>"><%= toolType.name %></a>
+    </h1>
+  </div>
+  <section>
+    <form action="/toolTypes/<%= toolType._id %>?_method=PUT" method="POST">
       <div>
         <label for="name">Name</label>
-      </div>
-      <div>
         <input type="text" name="name" id="name" autocomplete="off" value="<%= toolType.name %>"/>
       </div>
-    </div>
-    <div>
       <div>
         <label for="description">Description</label>
+        <textarea type="text" name="description" id="description" maxlength="250"><%= toolType.description %></textarea>
+          <p>250 char max</p>
       </div>
       <div>
-        <div>
-          <textarea type="text" name="description" id="description" maxlength="250"><%= toolType.description %></textarea>
-        </div>
-        250 char max
+        <button type="submit">Update Tool Type</button>
       </div>
-    </div>
-    <div>
-      <button type="submit">Update Tool Type</button>
-    </div>
-  </form>
-  <form action="/toolTypes/<%= toolType._id %>?_method=DELETE" method="POST">
-    <button type="submit">Delete Tool Type</button>
-  </form>
-  <% if (blankError) { %>
-    <div>
-      <h2>Please don't leave any fields blank</h2>
-    </div>
-  <% } %>
-  <% if (duplicateError) { %>
-    <div>
-      <h2>That tool type already exists</h2>
-    </div>
-  <% } %>
+    </form>
+    <form action="/toolTypes/<%= toolType._id %>?_method=DELETE" method="POST">
+      <button id="delete-button" type="submit">Delete Tool Type</button>
+    </form>
+    <% if (blankError) { %>
+      <div class="error">
+        <h2>Please don't leave any fields blank</h2>
+      </div>
+    <% } %>
+    <% if (duplicateError) { %>
+      <div class="error">
+        <h2>That tool type already exists</h2>
+      </div>
+    <% } else if (!blankError && !duplicateError) {%>
+      <div class="error">
+        <h2>Thanks for sharing</h2>
+      </div>
+    <% } %>
+  </section>
 </main>
 
 <%- include('../partials/footer') %>

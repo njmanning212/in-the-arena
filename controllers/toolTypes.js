@@ -82,7 +82,7 @@ function edit (req, res) {
   ToolType.findById(req.params.toolTypeId)
   .then (toolType => {
     res.render('toolTypes/edit', {
-      title: `Edit ${toolType.name}`,
+      title: `Edit Tool Type`,
       toolType,
       blankError: false,
       duplicateError: false,

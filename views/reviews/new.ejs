@@ -1,39 +1,47 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets//reviews/forms.css" />
 <%- include('../partials/nav') %>
 
 <main>
+  <div id="header">
+    <h1> 
+      <%= title %> for 
+      <br>
+      <a href="/tools/<%= tool._id %>"><%= tool.name %></a>
+    </h1>
+  </div>
   <section>
-  <h1> <%= title %> for <%= tool.name %></h1>
-
-  <form action="/tools/<%= tool._id %>/reviews"
-    method="POST">
-    <div>
-      <label for="content"></label>
-      <textarea name="content" id="content" cols="30" rows="10"></textarea>
-    </div>
-    <div>
-      <label for="rating">Rating</label>
-      <select name="rating" id="rating">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-    </div>
-    <% if (user) { %>
+    <form action="/tools/<%= tool._id %>/reviews"
+      method="POST">
       <div>
-        <button type="submit">Add Review</button>
+        <label for="content">Review</label>
+        <textarea name="content" id="content" cols="30" rows="10"></textarea>
       </div>
-    <% } %>
-
-    <% if (blankError) { %>
-      <div>
-        <h2>Please don't leave any fields blank</h2>
+      <div id="rating">
+        <label for="rating">Rating</label>
+        <select name="rating" id="rating">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
       </div>
-    <% } %>
-
-  </form>
+      <% if (user) { %>
+        <div id="button">
+          <button type="submit">Add Review</button>
+        </div>
+      <% } %>
+      <% if (blankError) { %>
+        <div class="error">
+          <h2>Please don't leave any fields blank</h2>
+        </div>
+      <% } else if (!blankError) {%>
+        <div class="error">
+          <h2>Thanks for sharing your thoughts</h2>
+        </div>
+      <% } %>
+    </form>
   </section>
 
 <%- include('../partials/footer') %>

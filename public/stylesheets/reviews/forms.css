@@ -1,0 +1,92 @@
+main {
+  height: 100%;
+}
+
+section {
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  width: 600px;
+  padding: 30px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+textarea {
+  height: 100px;
+  resize: none;
+}
+
+label {
+  color: black;
+  margin-bottom: 10px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.button {
+  margin-top: 10px;
+}
+
+h2 {
+  color: black;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black
+}
+
+a {
+  color: var(--button-color);
+}
+
+#header {
+  text-align: center;
+}
+
+h1 {
+  color: white;
+}
+
+#rating select{
+  width: 10%;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}

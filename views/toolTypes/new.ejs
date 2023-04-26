@@ -1,41 +1,39 @@
 <%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets//toolTypes/forms.css" />
 <%- include('../partials/nav') %>
 
 <main>
-  <h1> Thanks For Helping Us Add More Tools Types!</h1>
-  <form action="/toolTypes" method="POST">
-    <div>
+  <h1> <%= title %></h1>
+  <section>
+    <form action="/toolTypes" method="POST">
       <div>
-        <label for="name">Name</label>
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" autocomplete="off"/>
       </div>
-      <div>
-        <input type="text" name="name" id="name" autocomplete="off"/>
-      </div>
-    </div>
-    <div>
       <div>
         <label for="description">Description</label>
+        <textarea type="text" name="description" id="description" maxlength="250"></textarea>
+        <p>250 char max</p>
       </div>
       <div>
-        <div>
-          <textarea type="text" name="description" id="description" maxlength="250"></textarea>
-        </div>
-        250 char max
+        <button type="submit">Add Tool Type</button>
       </div>
-    </div>
-    <button type="submit">Add Tool Type</button>
-  </form>
-  <% if (blankError) { %>
-    <div>
-      <h2>Please don't leave any fields blank</h2>
-    </div>
-  <% } %>
-  <% if (duplicateError) { %>
-    <div>
-      <h2>That tool type already exists</h2>
-    </div>
-  <% } %>
-
+    </form>
+    <% if (blankError) { %>
+      <div class="error">
+        <h2>Please don't leave any fields blank</h2>
+      </div>
+    <% } %>
+    <% if (duplicateError) { %>
+      <div class="error">
+        <h2>That tool type already exists</h2>
+      </div>
+    <% } else if (!blankError && !duplicateError) {%>
+      <div class="error">
+        <h2>Thanks for sharing</h2>
+      </div>
+    <% } %>
+  </section>
 </main>
 
 <%- include('../partials/footer') %>

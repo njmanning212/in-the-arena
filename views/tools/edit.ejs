@@ -1,9 +1,15 @@
 <%- include('../partials/html-head') %>
-<link rel="stylesheet" href="/stylesheets//tools/form.css" />
+<link rel="stylesheet" href="/stylesheets//tools/forms.css" />
 <%- include('../partials/nav') %>
 
 <main>
-  <h1><%= title %></h1>
+  <div id="header">
+    <h1> 
+      <%= title %> 
+      <br>
+      <a href="/tools/<%= tool._id %>"><%= tool.name %></a>
+    </h1>
+  </div>
   <section>
     <form action="/tools/<%= tool._id %>?_method=PUT" method="POST">
       <div>
@@ -28,7 +34,7 @@
           <input type="text" name="imgOwnerLink" id="imgOwnerLink" value="<%= tool.imgOwnerLink %>">
       <div id="selectors">
         <div>
-          <label for="difficulty">Difficulty to Perform (0-10)</label>
+          <label for="difficulty">Difficulty to Perform (0-5)</label>
           <select name="difficulty" id="difficulty">
             <option value="<%= tool.difficulty %>"><%= tool.difficulty %></option>
             <option value="1">1</option>
@@ -36,11 +42,6 @@
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
           </select>
         </div>
         <div>
@@ -55,17 +56,17 @@
           </select>
         </div>
       </div>
-      <div id="button">
+      <div id="buttons">
         <% if (tool.author.equals(user?.profile._id)) { %>
           <button type="submit">Update Tool</button>
         <% } %>
-        <% if (tool.author.equals(user?.profile._id)) { %>
-          <form action="/tools/<%= tool._id %>?_method=DELETE" method="POST">
-            <button id="delete-button" type="submit">Delete Tool</button>
-          </form>
-        <% } %>
       </div>
     </form>
+    <% if (tool.author.equals(user?.profile._id)) { %>
+      <form action="/tools/<%= tool._id %>?_method=DELETE" method="POST">
+        <button id="delete-button" type="submit">Delete Tool</button>
+      </form>
+    <% } %>
     <% if (blankError) { %>
       <div class="error">
         <h2>Please don't leave any fields blank</h2>

@@ -3,12 +3,12 @@ main {
 }
 
 section {
-  background-color: #f7f7f7;
+  background-color: var(--form-background-color);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin: 20px auto;
+  margin: 20px 0px 0px 0px;
   width: 600px;
-  padding: 30px;
+  padding: 30px 30px 0px 30px;
   height: 700px;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@ form {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: -10px;
+  margin-bottom: 0px;
   width: 100%;
 }
 
@@ -63,21 +63,7 @@ input, select, textarea {
   box-sizing: border-box;
 }
 
-button {
-  background-color: #4CAF50;
-  border: none;
-  border-radius: 4px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  color: white;
-  cursor: pointer;
-  padding: 10px 20px;
-}
-
-button:hover {
-  background-color: #3e8e41;
-}
-
-#button {
+#buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -96,11 +82,15 @@ h2 {
 }
 
 #selectors {
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
+}
+
+#selectors select {
+  text-align: center;
 }
 
 #selectors div {
@@ -111,10 +101,17 @@ h2 {
   width: 40%;
 }
 
-#delete-button {
-  background-color: #f44336;
+
+h1 {
+  color: var(--text-on-background-color);
+  text-align: center;
 }
 
-#delete-button:hover {
-  background-color: #90160e;
+a {
+  color: var(--button-color);
+  text-decoration: none;
+}
+
+#header {
+  margin-bottom: -25px;
 }

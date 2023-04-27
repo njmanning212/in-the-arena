@@ -2,7 +2,7 @@
 
 **In The Arena** is an app created out of growing concern. As stress on society continues to increase and mental health takes a blow two things are occurring. A plethora of ways to combat these issues are being created with a difficulty in comparison on which works best, and for whom. The second, the paywall that many find in apps designed to help them that may steer them away from useful tools. **In The Arena** recognizes that it truly is a fight when it comes to mental health and we all need all the help that we can get. 
 
-**In The Arena ** is an open source app that allows individual to contribute the tools they have found to be the most impactful, and discover more tools that have helped others. 
+**In The Arena** is an open source app that allows individual to contribute the tools they have found to be the most impactful, and discover more tools that have helped others. 
 
 These tools can be categorized by type for easier access and can be rated by users to help others find the most useful tools.
 

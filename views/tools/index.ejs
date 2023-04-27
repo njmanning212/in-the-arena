@@ -4,11 +4,28 @@
 
 <main>
   <h1> <%= title %></h1>
-  <% if (user) { %>
-    <a href="/tools/new">
-      <button>Add Tool</button>
-    </a>
-  <% } %>
+  <div id="sorting">
+    <div>
+      <% if (user) { %>
+        <a href="/tools/new">
+          <button>Add Tool</button>
+        </a>
+      <% } %>
+    </div>
+    <div>
+      <form action="/tools/sort/type" method="GET">
+        <label for="tool-type">Sort by Tool Type:</label>
+        <select id="tool-type" name="toolTypeId">
+          <option value="ALL">ALL</option>
+          <% toolTypes.forEach(toolType => { %>
+            <option value="<%= toolType._id %>"><%= toolType.name %></option>
+          <% }) %>
+        </select>
+        <button type="submit">Sort</button>
+      </form>
+    </div>
+    
+  </div>
 
   <section>
     <% tools.forEach(tool => { %>
@@ -60,5 +77,6 @@
       </div>
     <% }) %>
   </section>
+</main>
 
 <%- include('../partials/footer') %>

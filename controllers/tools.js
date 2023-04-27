@@ -4,13 +4,21 @@ import { ToolType } from "../models/toolType.js";
 import { Review } from "../models/review.js";
 
 function index (req, res) {
-  Tool.find({})
-  .populate('author')
-  .populate('type')
-  .then (tools => {
-    res.render('tools/index', {
-      title: 'Tools',
-      tools,
+  ToolType.find({})
+  .then (toolTypes => {
+    Tool.find({})
+    .populate('author')
+    .populate('type')
+    .then (tools => {
+      res.render('tools/index', {
+        title: 'Tools',
+        tools,
+        toolTypes,
+      })
+    })
+    .catch (err => {
+      console.log(err)
+      res.redirect('/')
     })
   })
   .catch (err => {
@@ -464,6 +472,51 @@ function deleteReview(req, res) {
   });
 }
 
+function sortByType(req, res) {
+  ToolType.find({})
+  .then(toolTypes => {
+    if (req.query.toolTypeId === "All") {
+      Tool.find()
+      .populate('type')
+      .then(tools => {
+        res.render('tools/index', { 
+          title : 'All Tools', 
+          tools,
+          toolTypes
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        res.redirect('/tools');
+      });
+    } else {
+      ToolType.findById(req.query.toolTypeId)
+      .then(toolType => {
+        Tool.find({ type: req.query.toolTypeId })
+        .populate('type')
+        .then(tools => {
+          res.render('tools/index', { 
+            title : `${toolType.name} Tools`, 
+            tools,
+            toolTypes
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          res.redirect('/tools');
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        res.redirect('/tools');
+      });
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    res.redirect('/tools');
+  });
+}
 
 export {
   index,
@@ -479,4 +532,5 @@ export {
   editReview,
   updateReview,
   deleteReview,
+  sortByType
 }

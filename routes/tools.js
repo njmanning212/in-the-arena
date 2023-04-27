@@ -4,11 +4,13 @@ import { isLoggedIn } from '../middleware/middleware.js'
 
 const router = Router()
 
+
 router.get('/', toolsCtrl.index)
 router.get('/new', isLoggedIn, toolsCtrl.new)
 router.get('/:toolId', toolsCtrl.show)
 router.get('/:toolId/edit', isLoggedIn, toolsCtrl.edit)
 router.get('/:toolId/reviews', toolsCtrl.reviewsIndex)
+router.get('/sort/type', toolsCtrl.sortByType)
 router.get('/:toolId/reviews/new', isLoggedIn, toolsCtrl.newReview)
 router.get('/:toolId/reviews/:reviewId/edit', isLoggedIn, toolsCtrl.editReview)
 router.post('/', isLoggedIn, toolsCtrl.create)

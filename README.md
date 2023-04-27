@@ -48,4 +48,4 @@ User stories that inspired the creation of this app, wireframes, and ERD can be 
 - [ ] Add a chart on the profile page for easier visualization of progress/changes
 - [ ] Add the ability to add other profiles to a friends list 
 - [ ] Add the ability to send messages to other users
-- [ ] Optimize app for mobile use
+- [ ] Optimize the app for mobile use

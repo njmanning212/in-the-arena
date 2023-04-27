@@ -7,10 +7,10 @@ import { Review } from "../models/review.js";
 function index (req, res) {
   Profile.find({})
   .then(profiles => {
-      res.render('profiles/index', {
-          title: 'Profiles',
-          profiles
-      })
+    res.render('profiles/index', {
+      title: 'Profiles',
+      profiles
+    })
   })
   .catch(err => {
     console.log(err)
@@ -23,42 +23,41 @@ function show (req, res) {
   .populate('favoriteTools')
   .then(profile => {
     Tool.find({ author: profile._id })
-      .populate('type')
-      .then(tools => {
-        Review.find({ author: profile._id })
-          .populate('tool')
-          .then(reviews => {
-            ToolType.find({ author: profile._id })
-              .then(toolTypes => {
-                res.render('profiles/show', {
-                  title: `${profile.name}'s Profile`,
-                  profile,
-                  tools,
-                  reviews,
-                  toolTypes
-                });
-              })
-              .catch(err => {
-                console.error(err);
-                res.redirect(`/profiles/${req.params.profileId}`);
-              });
-          })
-          .catch(err => {
-            console.error(err);
-            res.redirect(`/profiles/${req.params.profileId}`);
+    .populate('type')
+    .then(tools => {
+      Review.find({ author: profile._id })
+      .populate('tool')
+      .then(reviews => {
+        ToolType.find({ author: profile._id })
+        .then(toolTypes => {
+          res.render('profiles/show', {
+            title: `${profile.name}'s Profile`,
+            profile,
+            tools,
+            reviews,
+            toolTypes
           });
+        })
+        .catch(err => {
+          console.error(err);
+          res.redirect(`/profiles/${req.params.profileId}`);
+        });
       })
       .catch(err => {
         console.error(err);
         res.redirect(`/profiles/${req.params.profileId}`);
       });
+    })
+    .catch(err => {
+      console.error(err);
+      res.redirect(`/profiles/${req.params.profileId}`);
+    });
   })
   .catch(err => {
     console.error(err);
     res.redirect('/');
   });
 }
-
 
 function createdToolsIndex (req, res) {
   Profile.findById(req.params.profileId)
@@ -192,8 +191,6 @@ function search (req, res) {
     res.redirect('/profiles')
   })
 }
-
-
 
 export {
   index,

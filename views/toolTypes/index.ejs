@@ -10,17 +10,14 @@
       <button type="button">Add Tool Type</button>
     </a>
   <% } %>
-
   <% toolTypes.forEach(toolType => { %>
     <div class="toolType">
       <h2><%= toolType.name %></h2>
       <a href="/toolTypes/<%= toolType._id %>">
         <button> Tool Type Details</button>
       </a>
-
     </div>
   <% }) %>
-
 </main>
 
 <%- include('../partials/footer') %>

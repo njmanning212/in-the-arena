@@ -28,20 +28,20 @@
           <option value="5">5</option>
         </select>
       </div>
-        <% if (review.author.equals(user?.profile._id)) { %>
-          <div class="buttons">
-            <button type="submit">Update Review</button>
-          </div>
-        <% } %>
-      </form>
-      <form action="/tools/<%= tool._id %>/reviews/<%= review._id %>?_method=DELETE"
+      <% if (review.author.equals(user?.profile._id)) { %>
+        <div class="buttons">
+          <button type="submit">Update Review</button>
+        </div>
+      <% } %>
+    </form>
+    <form action="/tools/<%= tool._id %>/reviews/<%= review._id %>?_method=DELETE"
       method="POST">
-        <% if (review.author.equals(user?.profile._id)) { %>
-          <div>
-            <button id="delete-button" type="submit">Delete Review</button>
-          </div>
-        <% } %>
-      </form>
+      <% if (review.author.equals(user?.profile._id)) { %>
+        <div>
+          <button id="delete-button" type="submit">Delete Review</button>
+        </div>
+      <% } %>
+    </form>
 
     <% if (blankError) { %>
       <div class="error">
@@ -53,5 +53,7 @@
       </div>
     <% } %>
   </section>
+</main>
+
 
 <%- include('../partials/footer') %>

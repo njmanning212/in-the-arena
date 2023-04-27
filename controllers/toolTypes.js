@@ -143,6 +143,10 @@ function update (req, res) {
       })
     }
   })
+  .catch (err => {
+    console.log(err)
+    res.redirect('/toolTypes')
+  })
 }
 
 function deleteToolType(req, res) {
@@ -158,7 +162,7 @@ function deleteToolType(req, res) {
         .catch(err => {
           console.error(err);
           res.redirect(`/toolTypes/${toolType._id}`)
-        });
+        })
       })
       .catch(err => {
         console.error(err);
@@ -174,7 +178,6 @@ function deleteToolType(req, res) {
   });
 }
 
-  
 export {
   newToolType as new,
   create,

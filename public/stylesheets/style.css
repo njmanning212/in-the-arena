@@ -87,12 +87,3 @@ a {
   color: var(--button-color);
   font-weight: bold;
 }
-
-#instructions {
-  margin-top: -15px;
-  max-width: 75%;
-}
-
-.average-rating {
-  margin-bottom: 10px;
-}

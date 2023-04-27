@@ -28,7 +28,6 @@
 * EJS view engine
 * CSS
 * JavaScript
-* HTML
 * Git
 * GitHub
 

@@ -175,6 +175,25 @@ function removeFavoriteTool (req, res) {
   })
 }
 
+function search (req, res) {
+  let searchName = req.query.searchName;
+  if (!searchName) {
+    res.redirect('/profiles')
+  }
+  Profile.find({ name: new RegExp(searchName, 'i') })
+  .then(profiles => {
+    res.render('profiles/index', { 
+      title: `Results for "${searchName}"`, 
+      profiles 
+    });
+  })
+  .catch(err => {
+    console.error(err);
+    res.redirect('/profiles')
+  })
+}
+
+
 
 export {
   index,
@@ -184,4 +203,5 @@ export {
   addFavoriteTool,
   removeFavoriteTool,
   createdToolsTypesIndex,
+  search,
 }

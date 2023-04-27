@@ -43,6 +43,12 @@
                   <% } %>
                 </p>
               </div>
+            <% } else if (tool.reviews.length === 0) { %>
+              <div class="average-rating">
+                <p>
+                  <a href="/tools/<%= tool._id %>/reviews">No Reviews</a>
+                </p>
+              </div>
             <% } %>
           </div>
           <div class="details">

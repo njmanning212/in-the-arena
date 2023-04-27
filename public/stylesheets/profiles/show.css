@@ -119,3 +119,7 @@ h2 {
 #created div {
   margin: 10px;
 }
+
+.average-rating p {
+  color: black;
+}

@@ -60,7 +60,13 @@
             <% } %>
           </p>
         </div>
-      <% } %>
+      <% } else if (tool.reviews.length === 0) { %>
+        <div class="average-rating">
+          <p>
+            <a href="/tools/<%= tool._id %>/reviews"><p>No Reviews</p></a>
+          </p>
+        </div>
+      <% } %>%>
       <% if (user) { %>
         <div>
           <form action="/profiles/<%= user?.profile._id %>/favoriteTools/<%= tool._id %>"

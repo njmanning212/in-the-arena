@@ -17,8 +17,8 @@ main {
   text-align: center;
   height: 300px;
   margin-bottom: 40px;
+  padding-bottom: 40px;
 }
-
 
 .img {
   border-top-right-radius: 8px;

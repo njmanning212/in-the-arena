@@ -17,7 +17,6 @@ body {
   --delete-button-hover-color: rgba(144, 22, 14, 1);
   background-color: var(--background-color);
   color: var(--text-on-background-color);
-  /* Use a system font, if none are available use any found sans-sarif font */
   font-family: system-ui, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 
     'Helvetica Neue', sans-serif;
   margin: 0;

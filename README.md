@@ -1,13 +1,21 @@
 # **In The Arena**
 
-**In The Arena** is an app created out of growing concern. As stress on society continues to increase and mental health takes a blow two things are occurring. A plethora of ways to combat these issues are being created with a difficulty in comparison on which works best, and for whom. The second, the paywall that many find in apps designed to help them that may steer them away from useful tools. **In The Arena** recognizes that it truly is a fight when it comes to mental health and we all need all the help that we can get. 
+![InTheArenaScreenshots](./public/assets/images/in-the-arena-screenshots.png "In The Arena Screenshots")
 
-**In The Arena** is an open source app that allows individual to contribute the tools they have found to be the most impactful, and discover more tools that have helped others. 
+**In The Arena** was developed due to the increasing concern over the mounting stress on society, impacting mental health, and resulting in two trends. First, many approaches are being developed to address these issues, but it's difficult to compare which is best and for whom. Second, there are paywalls in many apps that may discourage users from accessing helpful tools. Recognizing the fight for mental health is real and that we all need all the help we can get, **In The Arena** aims to help by equipping individuals with the right tools for the job. 
 
-These tools can be categorized by type for easier access and can be rated by users to help others find the most useful tools.
-
+**In The Arena** is an open-source app that allows individuals to contribute the tools they have found to be the most impactful and discover more tools that have helped others. 
 
 # **[Click Here To Join](https://in-the-arena.fly.dev/)**
+
+# **Current Features:**
+* First sign-in will automatically create a profile for the user
+* Users can add tools and tool types to the database
+* Users can add reviews and rate tools
+* Users can edit and delete their own reviews, ratings, tools, and tool types
+* Users/Guests can search for and view other profiles
+* Users can add/remove tools to and from their favorites list (currently capped at 3)
+* Users/Guests can sort tools by their tool type
 
 
 # **Technologies Used:**
@@ -29,15 +37,15 @@ User stories that inspired the creation of this app, wireframes, and ERD can be 
 
 
 # **Attributions:**
-- 
+- Background and favicon from [Canva](https://www.canva.com/p/brand262404081/)
 
 
 # **Ice Box:**
-- [ ] Add ability to sort tools by average rating, by type, or by both
-- [ ] Add ability to sort reviews by rating and date created
-- [ ] Add ability to search for tools by name, type, or both
-- [ ] Add ability to search for specific profiles
-- [ ] Add journal feature to allow users to track their progress and reflect on their journey
-- [ ] Add chart on profile page for easier visualization of progress/changes
-- [ ] Add ability to add other profiles to a friends list 
-- [ ] Add ability to send messages to other users
+- [ ] Add the ability to sort tools by average rating, by type, or by both
+- [ ] Add the ability to sort reviews by rating and date created
+- [ ] Add the ability to search for tools by name, type, or both
+- [x] Add the ability to search for specific profiles
+- [ ] Add a journal feature to allow users to track their progress and reflect on their journey
+- [ ] Add a chart on the profile page for easier visualization of progress/changes
+- [ ] Add the ability to add other profiles to a friends list 
+- [ ] Add the ability to send messages to other users

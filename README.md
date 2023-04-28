@@ -30,6 +30,8 @@
 * JavaScript
 * Git
 * GitHub
+* Passport.js
+* Docker
 
 # **Planning Materials:**
 User stories that inspired the creation of this app, wireframes, and ERD can be found [Here](https://trello.com/b/9mQTebGG/in-the-arena)

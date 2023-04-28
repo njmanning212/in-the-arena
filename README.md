@@ -30,7 +30,6 @@
 * JavaScript
 * Git
 * GitHub
-* Passport.js
 * Docker
 
 # **Planning Materials:**

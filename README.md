@@ -21,8 +21,8 @@
 # **Technologies Used:**
 * OAuth(Google)
 * Fly.io
-* Node.js
-* Express.js
+* Node
+* Express
 * MongoDB
 * Mongoose
 * EJS view engine
